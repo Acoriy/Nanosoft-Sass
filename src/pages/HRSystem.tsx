@@ -206,7 +206,7 @@ const HRSystem = () => {
         <div className="flex flex-wrap gap-4 justify-center">
           <Link to="/pricing">
             <Button className="bg-nanosoft-primary hover:bg-nanosoft-primary/90 px-8 py-6 text-lg">
-              ابدأ الاشتراك مجانا!!{" "}
+              ابدأ الاشتراك مجانا
             </Button>
           </Link>
           <Link to="/contact">

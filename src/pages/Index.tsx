@@ -9,7 +9,7 @@ import Decouvrir from "@/components/Decovrire";
 import ProductsSection from "@/components/ProductsSection";
 import HomeBlogSection from "@/components/HomeBlogSection";
 
-import {Link as LinkScroll} from "react-scroll"
+import { Link as LinkScroll } from "react-scroll";
 
 // images :
 import systems from "../assets/systheme partenaria.jpg";
@@ -81,13 +81,12 @@ const Index = () => {
               </span>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
                 <span className="inline-block relative text-nanosoft-primary">
-                  نانو سوفت
-                  <span className="absolute bottom-1 left-0 right-0 h-3 bg-nanosoft-primary/20 -z-10"></span>
+                  NanoSoft
+                  {/* <span className="absolute bottom-1 left-0 right-0 h-3 bg-nanosoft-primary/20 -z-10"></span> */}
                 </span>
                 <br />
-                <span>لحلول الأنظمة</span>
-                <br />
-                <span>الرقمية</span>
+                <span className="font-semibold">لحلول الأنظمة الرقمية</span>
+                
               </h1>
               <p className="text-lg md:text-xl text-gray-700 mb-8 max-w-xl">
                 نقدم لك حلول تقنية متكاملة تساعدك على تطوير أعمالك وزيادة
@@ -278,6 +277,7 @@ const Index = () => {
       </div>
 
       {/* Services Section */}
+
       <section id="services" className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <motion.div
@@ -467,7 +467,10 @@ const Index = () => {
                 </div>
               </div>
               <LinkScroll
-                to="services"  spy={true} smooth={true} duration={500}
+                to="services"
+                spy={true}
+                smooth={true}
+                duration={500}
                 className="inline-flex items-center hover:cursor-pointer px-6 py-3 bg-nanosoft-primary text-white rounded-xl font-medium hover:bg-nanosoft-secondary transition-colors"
               >
                 تعرف على خدماتنا
