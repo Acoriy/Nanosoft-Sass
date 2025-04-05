@@ -550,16 +550,16 @@ const Navbar = () => {
       icon: <ShieldCheck className="h-6 w-6 text-nanosoft-primary mb-2" />,
       category: "الأنظمة",
     },
-    {
-      name: "نظام ERP",
-      path: "/erp",
-      description: "نظام متكامل يربط جميع عمليات الأعمال في منصة موحدة",
-      icon: <Globe className="h-6 w-6 text-nanosoft-primary mb-2" />,
-      category: "الأنظمة",
-    },
+    // {
+    //   name: "نظام ERP",
+    //   path: "/injaz",
+    //   description: "نظام متكامل يربط جميع عمليات الأعمال في منصة موحدة",
+    //   icon: <Globe className="h-6 w-6 text-nanosoft-primary mb-2" />,
+    //   category: "الأنظمة",
+    // },
     {
       name: "نظام إنجاز لإدارة المشاريع",
-      path: "/enjaz",
+      path: "/injaz",
       description: "نظام متكامل لإدارة المشاريع والمهام وفرق العمل",
       icon: <Kanban className="h-6 w-6 text-nanosoft-primary mb-2" />,
       category: "الأنظمة",
@@ -681,8 +681,8 @@ const Navbar = () => {
 
           {/* ==================== VERSION MOBILE (UPDATED) ==================== */}
           {isMobileMenuOpen && (
-            <div className="md:hidden fixed inset-0 top-[72px] bg-white/95 backdrop-blur-md z-50 overflow-y-auto pb-20">
-              <div className="container mx-auto px-4 py-6">
+            <div className="md:hidden fixed inset-0 top-[72px] bg-white/95 backdrop-blur-md z-50  pb-20">
+              <div className="container mx-auto px-4 py-6 bg-white/95">
                 {/* Main Navigation Links */}
                 <div className="space-y-1 border-b border-gray-100 pb-4 mb-4">
                   {navLinks.map((link) => (

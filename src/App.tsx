@@ -20,9 +20,10 @@ import { AnimatePresence } from "framer-motion";
 import AccountingSystem from "./pages/AccountingSystem";
 import InventorySystem from "./pages/InventorySystem";
 import HRSystem from "./pages/HRSystem";
-import ERPSystem from "./pages/ERPSystem";
+// import ERPSystem from "./pages/ERPSystem";
 import ContactUs from "./pages/ContactUs";
 import WebDevService from "./pages/WebDevService";
+import Injaze from "./pages/Injaze";
 
 const queryClient = new QueryClient();
 
@@ -132,11 +133,11 @@ const App = () => (
               }
             />
             <Route
-              path="/erp"
+              path="/injaz"
               element={
                 <>
                   <Navbar />
-                  <ERPSystem />
+                  <Injaze/>
                   <Footer />
                 </>
               }
