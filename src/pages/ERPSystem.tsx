@@ -240,7 +240,7 @@ const ERPSystem = () => {
   return (
     <div className="container mx-auto py-12 px-4 sm:px-6 lg:px-8 pt-28  md:pt-32">
       <PageHeader
-        title="نظام تخطيط موارد المنشأة ERP"
+        title="نظام تخطيط موارد المؤسسة NanoSoft ERP"
         description="نظام متكامل يربط جميع عمليات الأعمال في منصة موحدة لإدارة الشركات والمؤسسات بكفاءة عالية"
       />
 

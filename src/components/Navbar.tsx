@@ -405,7 +405,7 @@ const Navbar = () => {
                 <div className="mb-4 pb-2 border-b">
                   <h3 className="text-lg font-bold text-gray-900">الأنظمة</h3>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   {solutionLinks
                     .filter((link) => link.category === "الأنظمة")
                     .map((system) => (
@@ -432,7 +432,7 @@ const Navbar = () => {
               </div>
 
               <div>
-                <div className="mb-4 pb-2 border-b">
+                <div className="mb-4 pb-2 border-b ">
                   <h3 className="text-lg font-bold text-gray-900">الخدمات</h3>
                 </div>
                 <div className="grid grid-cols-1 gap-4">
