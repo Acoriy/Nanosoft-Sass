@@ -24,6 +24,7 @@ import HRSystem from "./pages/HRSystem";
 import ContactUs from "./pages/ContactUs";
 import WebDevService from "./pages/WebDevService";
 import Injaze from "./pages/Injaze";
+import ERPSystem from "./pages/ERPSystem";
 
 const queryClient = new QueryClient();
 
@@ -138,6 +139,16 @@ const App = () => (
                 <>
                   <Navbar />
                   <Injaze/>
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/erp"
+              element={
+                <>
+                  <Navbar />
+                  <ERPSystem/>
                   <Footer />
                 </>
               }

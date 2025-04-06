@@ -25,15 +25,16 @@ const Footer = () => {
               شركة رائدة في مجال تقنية المعلومات وتطوير الحلول المتكاملة للشركات والمؤسسات.
             </p>
             <div className="flex space-x-4 space-x-reverse">
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nanosoft-primary transition-colors duration-300">
+              <a href="https://www.facebook.com/nanosoft.libya" target='_blank' className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nanosoft-primary transition-colors duration-300">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nanosoft-primary transition-colors duration-300">
-                <Youtube className="h-5 w-5" />
-              </a>
-              <a href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nanosoft-primary transition-colors duration-300">
+              <a href="https://www.linkedin.com/company/nanosoft-ly?originalSubdomain=ly" target='_blank' className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nanosoft-primary transition-colors duration-300">
                 <Linkedin className="h-5 w-5" />
               </a>
+              <a href="https://www.youtube.com/channel/UCIjcanGw-Gbm3mazrnS8r2w" target='_blank' className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nanosoft-primary transition-colors duration-300">
+                <Youtube className="h-5 w-5" />
+              </a>
+              
             </div>
           </motion.div>
 

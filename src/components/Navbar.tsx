@@ -97,33 +97,33 @@ const Navbar = () => {
 
   const solutionLinks = [
     {
-      name: "برنامج محاسبة",
+      name: "حساباتي للإدارة المالية ",
       path: "/accounting",
       description: "نظام محاسبة سحابي شامل مصمم خصيصاً للشركات والمؤسسات",
       icon: <Database className="h-6 w-6 text-nanosoft-primary mb-2" />,
       category: "الأنظمة",
     },
     {
-      name: "إدارة المخزون",
+      name: "لوجستي لإدارة المخزون والمشتريات ",
       path: "/inventory",
       description: "نظام إدارة متكامل للمخزون والمستودعات مع تتبع دقيق",
       icon: <Server className="h-6 w-6 text-nanosoft-primary mb-2" />,
       category: "الأنظمة",
     },
     {
-      name: "الموارد البشرية",
+      name: "بياناتي لإدارة الموارد البشرية",
       path: "/hr",
       description: "إدارة شاملة لشؤون الموظفين من التوظيف حتى إنهاء الخدمة",
       icon: <ShieldCheck className="h-6 w-6 text-nanosoft-primary mb-2" />,
       category: "الأنظمة",
     },
-    // {
-    //   name: "نظام ERP",
-    //   path: "/injaz",
-    //   description: "نظام متكامل يربط جميع عمليات الأعمال في منصة موحدة",
-    //   icon: <Globe className="h-6 w-6 text-nanosoft-primary mb-2" />,
-    //   category: "الأنظمة",
-    // },
+    {
+      name: "نظام تخطيط موارد المؤسسة NanoSoft ERP",
+      path: "/erp",
+      description: "نظام متكامل يربط جميع عمليات الأعمال في منصة موحدة",
+      icon: <Globe className="h-6 w-6 text-nanosoft-primary mb-2" />,
+      category: "الأنظمة",
+    },
     {
       name: "نظام إنجاز لإدارة المشاريع",
       path: "/injaz",
@@ -405,14 +405,14 @@ const Navbar = () => {
                 <div className="mb-4 pb-2 border-b">
                   <h3 className="text-lg font-bold text-gray-900">الأنظمة</h3>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {solutionLinks
                     .filter((link) => link.category === "الأنظمة")
                     .map((system) => (
                       <Link
                         key={system.path}
                         to={system.path}
-                        className="group flex flex-col p-4 rounded-lg transition-all duration-200 hover:bg-gray-50"
+                        className="group flex flex-col p-4 rounded-lg transition-all duration-200 hover:bg-gray-50 w-[250px]"
                         onClick={() => setIsSolutionsOpen(false)}
                       >
                         <div className="flex flex-col items-start">
