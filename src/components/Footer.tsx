@@ -19,7 +19,7 @@ const Footer = () => {
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <div className="flex items-center">
-              <img src={Logo} alt="نانو سوفت" className="w-16 h-16" />
+              <img src={Logo} alt="نانو سوفت" className="w-14 h-auto" />
             </div>
             <p className="text-gray-400 mt-4">
               شركة رائدة في مجال تقنية المعلومات وتطوير الحلول المتكاملة للشركات والمؤسسات.

@@ -91,7 +91,7 @@ const App = () => (
             
             {/* New Web Development Service Page */}
             <Route
-              path="/web-development"
+              path="/websites"
               element={
                 <>
                   <Navbar />

@@ -315,7 +315,7 @@ const Index = () => {
                 <h3 className="text-xl font-bold mb-4">{service.name}</h3>
                 <p className="text-gray-600 mb-6">{service.description}</p>
                 <Link
-                  to={`/pricing?service=${service.id}`}
+                  to={`/${service.id}`}
                   className="inline-flex items-center text-nanosoft-primary font-medium group-hover:translate-x-2 transition-transform duration-300"
                 >
                   عرض التفاصيل
