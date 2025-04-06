@@ -150,12 +150,13 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={cn(
-          "fixed top-0 right-0 left-0 z-50 transition-all duration-300 w-full",
-          isScrolled
-            ? "bg-white/80 backdrop-blur-md shadow-sm py-3"
-            : "bg-transparent py-5"
-        )}
+        // className={cn(
+        //   "fixed top-0 right-0 left-0 z-50 transition-all duration-300 w-full",
+        //   isScrolled
+        //     ? "bg-white/80 backdrop-blur-md shadow-sm py-3"
+        //     : "bg-transparent py-5"
+        // )}
+        className="fixed top-0 right-0 left-0 z-50 transition-all duration-300 w-full bg-white shadow-sm"
       >
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between">
@@ -167,7 +168,8 @@ const Navbar = () => {
               <img
                 src={Logo}
                 alt="logo"
-                className={cn(isScrolled ? "w-10" : "w-14")}
+                // className={cn(isScrolled ? "w-10" : "w-14")}
+                className="w-14"
               />
             </Link>
 
@@ -248,7 +250,7 @@ const Navbar = () => {
 
           {/* ==================== VERSION MOBILE (UPDATED) ==================== */}
           {isMobileMenuOpen && (
-            <div className="md:hidden fixed inset-0 top-[72px] bg-white/95 backdrop-blur-md z-50  pb-20">
+            <div className="md:hidden fixed inset-0 top-[72px] bg-white/95 backdrop-blur-md z-50  pb-20 mt-3">
               <div className="container mx-auto px-4 py-6 bg-white/95">
                 {/* Main Navigation Links */}
                 <div className="space-y-1 border-b border-gray-100 pb-4 mb-4">

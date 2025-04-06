@@ -1,15 +1,31 @@
-
-import { Link } from 'react-router-dom';
-import {motion} from "framer-motion"
-import { Facebook, Twitter, Youtube, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import {
+  Facebook,
+  Twitter,
+  Youtube,
+  Linkedin,
+  Mail,
+  Phone,
+  MapPin,
+} from "lucide-react";
 import Logo from "../assets/Logo.png";
+import { RiArrowUpDoubleLine } from "react-icons/ri";
 
 const Footer = () => {
-  return (  
+  return (
     <footer className="bg-gray-900 text-white pt-16 pb-6">
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container mx-auto px-4 md:px-6 ">
+        
+
         {/* Grille des sections */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 relative">
+          {/* Btn Go UP */}
+        <div className="hidden lg:block absolute right-5 -top-24">
+          <button className="flex justify-center  items-center  bg-nanosoft-secondary text-white w-[50px] h-[50px] rounded-full  hover:animate-bounce hover:bg-nanosoft-tertiary ">
+            <RiArrowUpDoubleLine size={35} />
+          </button>
+        </div>
           {/* Section 1 : Logo et description (Zoom) */}
           <motion.div
             className="space-y-4"
@@ -22,19 +38,31 @@ const Footer = () => {
               <img src={Logo} alt="نانو سوفت" className="w-14 h-auto" />
             </div>
             <p className="text-gray-400 mt-4">
-              شركة رائدة في مجال تقنية المعلومات وتطوير الحلول المتكاملة للشركات والمؤسسات.
+              شركة رائدة في مجال تقنية المعلومات وتطوير الحلول المتكاملة للشركات
+              والمؤسسات.
             </p>
             <div className="flex space-x-4 space-x-reverse">
-              <a href="https://www.facebook.com/nanosoft.libya" target='_blank' className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nanosoft-primary transition-colors duration-300">
+              <a
+                href="https://www.facebook.com/nanosoft.libya"
+                target="_blank"
+                className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nanosoft-primary transition-colors duration-300"
+              >
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="https://www.linkedin.com/company/nanosoft-ly?originalSubdomain=ly" target='_blank' className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nanosoft-primary transition-colors duration-300">
+              <a
+                href="https://www.linkedin.com/company/nanosoft-ly?originalSubdomain=ly"
+                target="_blank"
+                className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nanosoft-primary transition-colors duration-300"
+              >
                 <Linkedin className="h-5 w-5" />
               </a>
-              <a href="https://www.youtube.com/channel/UCIjcanGw-Gbm3mazrnS8r2w" target='_blank' className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nanosoft-primary transition-colors duration-300">
+              <a
+                href="https://www.youtube.com/channel/UCIjcanGw-Gbm3mazrnS8r2w"
+                target="_blank"
+                className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-nanosoft-primary transition-colors duration-300"
+              >
                 <Youtube className="h-5 w-5" />
               </a>
-              
             </div>
           </motion.div>
 
@@ -47,12 +75,54 @@ const Footer = () => {
           >
             <h4 className="text-lg font-semibold mb-5">روابط سريعة</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">الرئيسية</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">من نحن</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">خدماتنا</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">المنتجات</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">المدونة</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">اتصل بنا</a></li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  الرئيسية
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  من نحن
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  خدماتنا
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  المنتجات
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  المدونة
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  اتصل بنا
+                </a>
+              </li>
             </ul>
           </motion.div>
 
@@ -65,12 +135,54 @@ const Footer = () => {
           >
             <h4 className="text-lg font-semibold mb-5">خدماتنا</h4>
             <ul className="space-y-3">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">تطوير البرمجيات</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">تطبيقات الجوال</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">تطوير المواقع</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">الذكاء الاصطناعي</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">خدمات السحابة</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">الأمن السيبراني</a></li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  تطوير البرمجيات
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  تطبيقات الجوال
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  تطوير المواقع
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  الذكاء الاصطناعي
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  خدمات السحابة
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  الأمن السيبراني
+                </a>
+              </li>
             </ul>
           </motion.div>
 
@@ -113,9 +225,24 @@ const Footer = () => {
             </p>
 
             <div className="flex space-x-6 space-x-reverse">
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors duration-300">سياسة الخصوصية</a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors duration-300">الشروط والأحكام</a>
-              <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors duration-300">الدعم الفني</a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-white text-sm transition-colors duration-300"
+              >
+                سياسة الخصوصية
+              </a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-white text-sm transition-colors duration-300"
+              >
+                الشروط والأحكام
+              </a>
+              <a
+                href="#"
+                className="text-gray-400 hover:text-white text-sm transition-colors duration-300"
+              >
+                الدعم الفني
+              </a>
             </div>
           </div>
         </motion.div>

@@ -83,7 +83,7 @@ const ProductSelector = () => {
                       px-3 py-2 
                       text-xs md:text-sm
                       min-w-[120px]
-                      text-center
+                      text-center font-semibold  
                     "
                   >
                     {tabData[tab].title}
