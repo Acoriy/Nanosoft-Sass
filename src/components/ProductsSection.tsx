@@ -1,39 +1,42 @@
 import React, { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Dashboard1 from "../assets/Dashboard1.jpg";
-import Dashboard2 from "../assets/Dashboard2.png";
-import Dashboard3 from "../assets/Dashboard3.png";
-import Dashboard4 from "../assets/Dashboard4.png";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
+// Dashboards : 
+import Accounting from "../assets/Dashboards/Accounting UI.bmp";
+import HR from "../assets/Dashboards/HR UI.bmp";
+import PMS from "../assets/Dashboards/PMS UI.bmp";
+import Warehose from "../assets/Dashboards/Warehouse UI.bmp";
+
 const ProductSelector = () => {
   const [activeTab, setActiveTab] = useState("accounting");
 
   const tabData = {
-    accounting: {
-      title: "حساباتي للإدارة المالية ",
-      image: Dashboard1,
+    projet: {
+      title: "إنجاز لإدارة المشروعات ",
+      image: PMS,
     },
     logi: {
       title: "لوجستي لإدارة المخزون والمشتريات ",
-      image: Dashboard2,
+      image: Warehose,
     },
     hr: {
       title: "بياناتي لإدارة الموارد البشرية",
-      image: Dashboard3,
+      image: HR,
     },
-    projet: {
-      title: "إنجاز لإدارة المشروعات ",
-      image: Dashboard4,
+    
+    accounting: {
+      title: "حساباتي للإدارة المالية ",
+      image: Accounting,
     },
-    ERP: {
-      title: "نظام تخطيط موارد المؤسسة NanoSoft ERP ",
-      image: Dashboard2,
-    },
+    // ERP: {
+    //   title: "نظام تخطيط موارد المؤسسة NanoSoft ERP ",
+    //   image: Dashboard2,
+    // },
    
   };
 

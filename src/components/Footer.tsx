@@ -12,6 +12,9 @@ import {
 import Logo from "../assets/Logo.png";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
 
+
+import {Link as LinkScroll} from "react-scroll";
+
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-6">
@@ -75,54 +78,54 @@ const Footer = () => {
           >
             <h4 className="text-lg font-semibold mb-5">روابط سريعة</h4>
             <ul className="space-y-3">
-              <li>
+              <Link to="/">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   الرئيسية
                 </a>
-              </li>
-              <li>
+              </Link>
+              <LinkScroll to="">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   من نحن
                 </a>
-              </li>
-              <li>
+              </LinkScroll>
+              <LinkScroll to="">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   خدماتنا
                 </a>
-              </li>
-              <li>
+              </LinkScroll>
+              <LinkScroll to="">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   المنتجات
                 </a>
-              </li>
-              <li>
+              </LinkScroll>
+              <Link to="/blog">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   المدونة
                 </a>
-              </li>
-              <li>
+              </Link>
+              <Link to="/contact">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   اتصل بنا
                 </a>
-              </li>
+              </Link>
             </ul>
           </motion.div>
 
@@ -135,54 +138,54 @@ const Footer = () => {
           >
             <h4 className="text-lg font-semibold mb-5">خدماتنا</h4>
             <ul className="space-y-3">
-              <li>
+              <Link to="">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   تطوير البرمجيات
                 </a>
-              </li>
-              <li>
+              </Link>
+              <Link to="">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   تطبيقات الجوال
                 </a>
-              </li>
-              <li>
+              </Link>
+              <Link to="">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   تطوير المواقع
                 </a>
-              </li>
-              <li>
+              </Link>
+              <Link to="">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   الذكاء الاصطناعي
                 </a>
-              </li>
-              <li>
+              </Link>
+              <Link to="">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   خدمات السحابة
                 </a>
-              </li>
-              <li>
+              </Link>
+              <Link to="">
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   الأمن السيبراني
                 </a>
-              </li>
+              </Link>
             </ul>
           </motion.div>
 

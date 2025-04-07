@@ -75,158 +75,167 @@ const Index = () => {
     <div className="min-h-screen overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center bg-hero-pattern bg-cover bg-center pt-20 md:pt-16">
-      {/* Overlay gradient */}
-      <div className="absolute inset-0 bg-gradient-radial from-transparent to-white/70 dark:to-gray-900/30"></div>
-      
-      <div className="container mx-auto px-4 z-10 py-12 md:py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
-          {/* Text Content */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="order-2 lg:order-1 text-center lg:text-right"
-          >
-            <span className="inline-block px-4 py-1 bg-nanosoft-primary/10 text-nanosoft-primary rounded-full text-sm font-semibold mb-4">
-              الرائدة في حلول تقنية المعلومات
-            </span>
-            
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-4 md:mb-6 leading-tight">
-              <span className="inline-block relative text-nanosoft-primary">
-                NanoSoft
+        {/* Overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-radial from-transparent to-white/70 dark:to-gray-900/30"></div>
+
+        <div className="container mx-auto px-4 z-10 py-12 md:py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+            {/* Text Content */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="order-2 lg:order-1 text-center lg:text-right"
+            >
+              <span className="inline-block px-4 py-1 bg-nanosoft-primary/10 text-nanosoft-primary rounded-full text-sm font-semibold mb-4">
+                الرائدة في حلول تقنية المعلومات
               </span>
-              <br />
-              <span className="font-semibold">لحلول الأنظمة الرقمية</span>
-            </h1>
-            
-            <p className="text-base md:text-lg lg:text-xl text-gray-700 mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0">
-              نقدم لك حلول تقنية متكاملة تساعدك على تطوير أعمالك وزيادة
-              إنتاجيتك مع أحدث التقنيات المبتكرة.
-            </p>
 
-            {/* Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 md:gap-8 justify-center lg:justify-start">
-              <button className="text-white bg-nanosoft-primary text-lg md:text-xl font-bold px-6 py-3 md:p-4 rounded-lg hover:bg-green-700 transition-colors duration-300">
-                تجربة مجانية
-              </button>
-              
-              <button
-                className="bg-transparent text-nanosoft-accent font-bold text-lg md:text-xl flex flex-row items-center justify-center gap-1 transition-transform duration-300 ease-in-out hover:translate-x-1"
-                onMouseEnter={handleHoverIconBtn}
-                onMouseLeave={handleHoverIconBtn}
-              >
-                <p>احجز عرضًا توضيحيًا</p>
-                {changeIcon ? (
-                  <ArrowLeft size={24} className="md:w-7 md:h-7" />
-                ) : (
-                  <IoIosArrowBack size={24} className="md:w-7 md:h-7" />
-                )}
-              </button>
-            </div>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-4 md:mb-6 leading-tight">
+                <span className="inline-block relative text-nanosoft-primary">
+                  NanoSoft
+                </span>
+                <br />
+                <span className="font-semibold">لحلول الأنظمة الرقمية</span>
+              </h1>
 
-            {/* Trusted By */}
-            <div className="mt-8 md:mt-10">
+              <p className="text-base md:text-lg lg:text-xl text-gray-700 mb-6 md:mb-8 max-w-xl mx-auto lg:mx-0">
+                نقدم لك حلول تقنية متكاملة تساعدك على تطوير أعمالك وزيادة
+                إنتاجيتك مع أحدث التقنيات المبتكرة.
+              </p>
+
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 md:gap-8 justify-center lg:justify-start">
+               
+                  <Link to="/pricing" className="text-white bg-nanosoft-primary text-lg md:text-xl font-bold px-6 py-3 md:p-4 rounded-lg hover:bg-green-700 transition-colors duration-300">
+                    تجربة مجانية
+                  </Link>
+                
+
+               
+                <Link to="/contact"
+                  className="bg-transparent text-nanosoft-accent font-bold text-lg md:text-xl flex flex-row items-center justify-center gap-1 transition-transform duration-300 ease-in-out hover:translate-x-1"
+                  onMouseEnter={handleHoverIconBtn}
+                  onMouseLeave={handleHoverIconBtn}
+                >
+                  <p>احجز عرضًا توضيحيًا</p>
+                  {changeIcon ? (
+                    <ArrowLeft size={24} className="md:w-7 md:h-7" />
+                  ) : (
+                    <IoIosArrowBack size={24} className="md:w-7 md:h-7" />
+                  )}
+                </Link >
+              </div>
+
+              {/* Trusted By */}
+              {/* <div className="mt-8 md:mt-10">
               <p className="text-gray-700 font-bold text-sm md:text-base tracking-wide text-center">
                 أكثر من 500 شركة حول العالم، جميعها تثق بنا
               </p>
-            </div>
-          </motion.div>
+            </div> */}
+            </motion.div>
 
-          {/* Image Content */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="order-1 lg:order-2 relative mb-12 lg:mb-0"
-          >
-            <div className="w-full h-full absolute top-4 md:top-8 right-4 md:right-8 bg-nanosoft-primary/10 rounded-2xl md:rounded-3xl"></div>
-            <img
-              src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=800&auto=format&fit=crop"
-              alt="Software Development"
-              className="rounded-2xl md:rounded-3xl w-full h-auto md:h-[500px] object-cover shadow-xl md:shadow-2xl"
-            />
-            
-            {/* Quality Badge */}
-            <div className="absolute -bottom-4 md:-bottom-6 -left-4 md:-left-6 w-10/12 md:max-w-xs">
-              <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6">
-                <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-nanosoft-primary/20 flex items-center justify-center">
-                    <svg
-                      className="w-4 h-4 md:w-5 md:h-5 text-nanosoft-primary"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M5 13l4 4L19 7"
-                      ></path>
-                    </svg>
+            {/* Image Content */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="order-1 lg:order-2 relative mb-12 lg:mb-0"
+            >
+              <div className="w-full h-full absolute top-4 md:top-8 right-4 md:right-8 bg-nanosoft-primary/10 rounded-2xl md:rounded-3xl"></div>
+              <img
+                src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=800&auto=format&fit=crop"
+                alt="Software Development"
+                className="rounded-2xl md:rounded-3xl w-full h-auto md:h-[500px] object-cover shadow-xl md:shadow-2xl"
+              />
+
+              {/* Quality Badge */}
+              <div className="absolute -bottom-4 md:-bottom-6 -left-4 md:-left-6 w-10/12 md:max-w-xs">
+                <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6">
+                  <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-nanosoft-primary/20 flex items-center justify-center">
+                      <svg
+                        className="w-4 h-4 md:w-5 md:h-5 text-nanosoft-primary"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M5 13l4 4L19 7"
+                        ></path>
+                      </svg>
+                    </div>
+                    <h3 className="font-bold text-sm md:text-base">
+                      جودة عالية
+                    </h3>
                   </div>
-                  <h3 className="font-bold text-sm md:text-base">جودة عالية</h3>
+                  <p className="text-gray-600 text-xs md:text-sm">
+                    نحن نقدم حلولًا برمجية عالية الجودة تلبي احتياجاتك وتتجاوز
+                    توقعاتك.
+                  </p>
                 </div>
-                <p className="text-gray-600 text-xs md:text-sm">
-                  نحن نقدم حلولًا برمجية عالية الجودة تلبي احتياجاتك وتتجاوز
-                  توقعاتك.
-                </p>
               </div>
-            </div>
-            
-            {/* Delivery Badge */}
-            <div className="absolute -top-4 md:-top-6 -right-4 md:-right-6 w-10/12 md:max-w-xs">
-              <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6">
-                <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                  <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-nanosoft-primary/20 flex items-center justify-center">
-                    <svg
-                      className="w-4 h-4 md:w-5 md:h-5 text-nanosoft-primary"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                      ></path>
-                    </svg>
+
+              {/* Delivery Badge */}
+              <div className="absolute -top-4 md:-top-6 -right-4 md:-right-6 w-10/12 md:max-w-xs">
+                <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6">
+                  <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-nanosoft-primary/20 flex items-center justify-center">
+                      <svg
+                        className="w-4 h-4 md:w-5 md:h-5 text-nanosoft-primary"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <h3 className="font-bold text-sm md:text-base">
+                      تسليم سريع
+                    </h3>
                   </div>
-                  <h3 className="font-bold text-sm md:text-base">تسليم سريع</h3>
+                  <p className="text-gray-600 text-xs md:text-sm">
+                    نلتزم بتسليم مشاريعنا في الوقت المحدد دون المساس بالجودة.
+                  </p>
                 </div>
-                <p className="text-gray-600 text-xs md:text-sm">
-                  نلتزم بتسليم مشاريعنا في الوقت المحدد دون المساس بالجودة.
-                </p>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
-      </div>
 
-      {/* Scroll Down Indicator */}
-      <div className="absolute -bottom-2 md:bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <a
-          href="#services"
-          className="flex flex-col items-center text-gray-400 hover:text-nanosoft-primary transition-colors"
-        >
-          <span className="text-xs md:text-sm mb-1 md:mb-2">تعرف على المزيد</span>
-          <svg
-            className="w-5 h-5 md:w-6 md:h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        {/* Scroll Down Indicator */}
+        <div className="absolute -bottom-2 md:bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <a
+            href="#services"
+            className="flex flex-col items-center text-gray-400 hover:text-nanosoft-primary transition-colors"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M19 9l-7 7-7-7"
-            ></path>
-          </svg>
-        </a>
-      </div>
-    </section>
+            <span className="text-xs md:text-sm mb-1 md:mb-2">
+              تعرف على المزيد
+            </span>
+            <svg
+              className="w-5 h-5 md:w-6 md:h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </a>
+        </div>
+      </section>
 
       {/* animation logos */}
       <div className="py-5 overflow-hidden">
@@ -492,7 +501,7 @@ const Index = () => {
               لماذا تختارنا
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              ما يميزنا عن الآخرين
+              مميزات NanoSoft
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               نحن نسعى جاهدين لتقديم أفضل الحلول البرمجية التي تلبي احتياجات
