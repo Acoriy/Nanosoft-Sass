@@ -135,7 +135,7 @@ const Navbar = () => {
     {
       name: "تطوير المواقع والتطبيقات",
       path: "/websites",
-      description: "تصميم وتطوير مواقع ويب وتطبيقات جوال احترافية",
+      description: "تطوير البرمجيات حسب احتياج العميل",
       icon: <Code className="h-6 w-6 text-nanosoft-primary mb-2" />,
       category: "الخدمات",
     },
