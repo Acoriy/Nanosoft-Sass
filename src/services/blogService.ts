@@ -30,7 +30,9 @@ export interface Blog {
   image: string;
   date: string;
   published: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   createdAt?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   updatedAt?: any;
 }
 

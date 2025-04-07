@@ -1,4 +1,3 @@
-import { FaComments } from 'react-icons/fa';
 
 // export type ServiceCategory = {
 //   id: string;
@@ -19,7 +18,7 @@ import { FaComments } from 'react-icons/fa';
 // };
 
 // export const serviceCategories: ServiceCategory[] = [
-//   {
+  //   {
 //     id: "accounting",
 //     name: "برنامج محاسبة",
 //     description: "برنامج محاسبة متكامل لإدارة الشركات",
@@ -176,7 +175,7 @@ import { FaComments } from 'react-icons/fa';
 //     popular: false,
 //   },
 //   {
-//     id: "hr-standard",
+  //     id: "hr-standard",
 //     serviceId: "hr",
 //     name: "الباقة المتوسطة",
 //     price: 1299,
@@ -333,6 +332,7 @@ import { FaComments } from 'react-icons/fa';
 // };
 
 // -------------------------------------------------------------------
+import { FaComments } from 'react-icons/fa';
 
 export type ServiceCategory = {
   id: string;
@@ -341,47 +341,7 @@ export type ServiceCategory = {
   icon: string;
 };
 
-// Le tableau des catégories de services est maintenu
-// export const serviceCategories: ServiceCategory[] = [
-//   {
-//     id: "accounting",
-//     name: "حساباتي للإدارة المالية",
-//     description: "برنامج محاسبة متكامل لإدارة الشركات",
-//     icon: "💰",
-//   },
-//   {
-//     id: "inventory",
-//     name: "لوجستي لإدارة المخزون والمشتريات",
-//     description: "نظام متكامل لإدارة المخزون والمستودعات",
-//     icon: "📦",
-//   },
-//   {
-//     id: "hr",
-//     name: "بياناتي لإدارة الموارد البشرية",
-//     description: "نظام شامل لإدارة الموارد البشرية",
-//     icon: "👥",
 
-//   },
-//   {
-//     id: "injaz",
-//       name: "نظام إنجاز لإدارة المشاريع",
-//       description: "نظام متكامل لإدارة المشاريع والمهام وفرق العمل",
-//       icon: "🏢",
-    
-//   },
-//   {
-//     id: "erp",
-//       name: "نظام تخطيط موارد المؤسسة NanoSoft ERP",
-//       description: "نظام متكامل يربط جميع عمليات الأعمال في منصة موحدة",
-//     icon: "🏢",
-//   },
-//   {
-//     id: "websites",
-//     name: "تطوير البرمجيات",
-//     description: "تطوير البرمجيات حسب احتياج العميل",
-//     icon: "🌐",
-//   },
-// ];
 
 export const serviceCategories: ServiceCategory[] = [
   {

@@ -11,7 +11,6 @@ import {
   where,
   serverTimestamp,
   orderBy,
-  limit,
   writeBatch,
   setDoc
 } from 'firebase/firestore';
@@ -35,21 +34,18 @@ export interface Price {
   updatedAt?: any;
 }
 
-// Données des prix par défaut basées sur pricingData.ts
 const defaultPricesData = pricingPlans.map(plan => ({
   title: plan.name,
   price: plan.price.toString(),
-  currency: "LYD", // Dinar libyen par défaut
-  period: "monthly", // Mensuel par défaut
+  currency: "LYD",
+  period: "monthly",
   features: plan.features.join(','),
   isPopular: plan.popular,
   category: plan.serviceId
 }));
 
-// Maximum number of retries
 const MAX_RETRIES = 3;
 
-// Helper function to retry operations with exponential backoff
 const retryOperation = async (operation, retries = MAX_RETRIES, delay = 1000) => {
   try {
     return await operation();
@@ -64,26 +60,22 @@ const retryOperation = async (operation, retries = MAX_RETRIES, delay = 1000) =>
   }
 };
 
-// Fonction pour initialiser les prix par défaut si aucun n'existe
+// Initialiser les prix par défaut si aucun document n'existe
 export const initializeDefaultPrices = async (): Promise<void> => {
   try {
     console.log("Vérification des prix par défaut...");
-    
-    // Vérifier si des prix existent déjà
     const pricesRef = collection(db, COLLECTION_NAME);
-    const q = query(pricesRef, limit(1));
+    // Vérifier l'existence d'au moins un document (sans limite ici)
+    const q = query(pricesRef);
     const snapshot = await getDocs(q);
     
     if (snapshot.empty) {
       console.log("Aucun prix trouvé, initialisation des prix par défaut...");
-      
-      // Utiliser un batch pour une meilleure performance et fiabilité
       const batch = writeBatch(db);
       
-      // Créer des prix par défaut avec des IDs spécifiques pour faciliter les tests
       for (let i = 0; i < defaultPricesData.length; i++) {
         const priceData = defaultPricesData[i];
-        const priceId = `default-price-${i+1}`;
+        const priceId = `default-price-${i + 1}`;
         const priceRef = doc(db, COLLECTION_NAME, priceId);
         
         batch.set(priceRef, {
@@ -93,7 +85,6 @@ export const initializeDefaultPrices = async (): Promise<void> => {
         });
       }
       
-      // Exécuter le batch
       await batch.commit();
       console.log("Prix par défaut ajoutés avec succès ✅");
       toast.success("Prix par défaut créés avec succès");
@@ -103,32 +94,24 @@ export const initializeDefaultPrices = async (): Promise<void> => {
   } catch (error) {
     console.error("Erreur lors de l'initialisation des prix par défaut:", error);
     toast.error("Erreur lors de la création des prix par défaut");
-    throw error; // Rethrow to allow retry logic to work
+    throw error;
   }
 };
 
-// Obtenir tous les prix
+// Obtenir tous les prix (sans limite) de manière optimisée
 export const getPrices = async (): Promise<Price[]> => {
   return retryOperation(async () => {
     try {
       console.log("Récupération de tous les prix...");
       const pricesRef = collection(db, COLLECTION_NAME);
+      // Supprimer le limit() pour récupérer tous les documents
       const q = query(pricesRef, orderBy('createdAt', 'desc'));
-      const snapshot = await getDocs(q);
+      let snapshot = await getDocs(q);
       
       if (snapshot.empty) {
         console.log("Aucun prix trouvé, initialisation...");
         await initializeDefaultPrices();
-        
-        // Récupérer à nouveau après l'initialisation
-        const newSnapshot = await getDocs(q);
-        const prices = newSnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data() as Price
-        }));
-        
-        console.log(`${prices.length} prix récupérés après initialisation ✅`);
-        return prices;
+        snapshot = await getDocs(q);
       }
       
       const prices = snapshot.docs.map(doc => ({
@@ -141,20 +124,20 @@ export const getPrices = async (): Promise<Price[]> => {
     } catch (error) {
       console.error("Erreur lors de la récupération des prix:", error);
       toast.error("Erreur lors de la récupération des prix");
-      throw error; // Rethrow to allow retry logic to work
+      throw error;
     }
   });
 };
 
-// Obtenir les prix par catégorie
+// Obtenir les prix par catégorie (sans limite) de manière optimisée
 export const getPricesByCategory = async (category: string): Promise<Price[]> => {
   return retryOperation(async () => {
     try {
       console.log(`Récupération des prix pour la catégorie: ${category}...`);
-      
-      // Vérifier d'abord si des prix existent
       const pricesRef = collection(db, COLLECTION_NAME);
-      const allPricesQuery = query(pricesRef, limit(1));
+      
+      // Vérifier si des prix existent déjà
+      const allPricesQuery = query(pricesRef);
       const allPricesSnapshot = await getDocs(allPricesQuery);
       
       if (allPricesSnapshot.empty) {
@@ -162,18 +145,22 @@ export const getPricesByCategory = async (category: string): Promise<Price[]> =>
         await initializeDefaultPrices();
       }
       
-      // Requête pour obtenir les prix de la catégorie spécifique
-      const categoryQuery = query(pricesRef, where('category', '==', category), orderBy('createdAt', 'desc'));
-      const snapshot = await getDocs(categoryQuery);
+      // Requête pour obtenir tous les documents de la catégorie spécifiée
+      const categoryQuery = query(
+        pricesRef,
+        where('category', '==', category),
+        orderBy('createdAt', 'desc')
+      );
+      let snapshot = await getDocs(categoryQuery);
       
-      const prices = snapshot.docs.map(doc => ({
+      let prices = snapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data() as Price
       }));
       
       console.log(`${prices.length} prix récupérés pour la catégorie ${category} ✅`);
       
-      // Si aucun prix n'est trouvé pour cette catégorie, initialiser les prix par défaut spécifiques
+      // Si aucun document n'est trouvé pour la catégorie, initialiser pour celle-ci
       if (prices.length === 0) {
         console.log(`Aucun prix trouvé pour la catégorie ${category}, initialisation spécifique...`);
         const categoryPlans = defaultPricesData.filter(price => price.category === category);
@@ -183,7 +170,7 @@ export const getPricesByCategory = async (category: string): Promise<Price[]> =>
           
           for (let i = 0; i < categoryPlans.length; i++) {
             const priceData = categoryPlans[i];
-            const priceId = `default-${category}-price-${i+1}`;
+            const priceId = `default-${category}-price-${i + 1}`;
             const priceRef = doc(db, COLLECTION_NAME, priceId);
             
             batch.set(priceRef, {
@@ -195,10 +182,8 @@ export const getPricesByCategory = async (category: string): Promise<Price[]> =>
           
           await batch.commit();
           console.log(`Prix par défaut pour la catégorie ${category} ajoutés avec succès ✅`);
-          
-          // Récupérer à nouveau après l'initialisation
-          const newSnapshot = await getDocs(categoryQuery);
-          return newSnapshot.docs.map(doc => ({
+          snapshot = await getDocs(categoryQuery);
+          prices = snapshot.docs.map(doc => ({
             id: doc.id,
             ...doc.data() as Price
           }));
@@ -208,9 +193,7 @@ export const getPricesByCategory = async (category: string): Promise<Price[]> =>
       return prices;
     } catch (error) {
       console.error("Erreur lors de la récupération des prix par catégorie:", error);
-      // toast.error("Erreur lors de la récupération des prix par catégorie");
-      // throw error; // Rethrow to allow retry logic to work
-      throw "";
+      throw error;
     }
   });
 };
@@ -258,7 +241,6 @@ export const addPrice = async (price: Price): Promise<string> => {
 export const updatePrice = async (id: string, price: Partial<Price>): Promise<void> => {
   try {
     const docRef = doc(db, COLLECTION_NAME, id);
-    
     await updateDoc(docRef, {
       ...price,
       updatedAt: serverTimestamp()
@@ -277,7 +259,6 @@ export const deletePrice = async (id: string): Promise<void> => {
   try {
     const docRef = doc(db, COLLECTION_NAME, id);
     await deleteDoc(docRef);
-    
     toast.success("Prix supprimé avec succès");
   } catch (error) {
     console.error("Erreur lors de la suppression du prix:", error);
@@ -290,7 +271,6 @@ export const deletePrice = async (id: string): Promise<void> => {
 export const togglePopular = async (id: string, isPopular: boolean): Promise<void> => {
   try {
     const docRef = doc(db, COLLECTION_NAME, id);
-    
     await updateDoc(docRef, {
       isPopular,
       updatedAt: serverTimestamp()
@@ -304,7 +284,7 @@ export const togglePopular = async (id: string, isPopular: boolean): Promise<voi
   }
 };
 
-// Fonction pour s'abonner aux mises à jour des prix en temps réel
+// S'abonner aux mises à jour des prix en temps réel
 export const subscribeToPricesUpdates = (callback) => {
   console.log("Abonnement aux mises à jour des prix en temps réel...");
   return subscribeToCollection('prices', callback);

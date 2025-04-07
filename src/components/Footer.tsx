@@ -1,13 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-  Facebook,
-  Youtube,
-  Linkedin,
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
+import { Facebook, Youtube, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import Logo from "../assets/Logo.png";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
 
@@ -27,7 +20,7 @@ const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
+      behavior: "smooth",
     });
   };
 
@@ -69,7 +62,7 @@ const Footer = () => {
             transition={{ duration: 0.5, ease: "easeOut" }}
           >
             <div className="flex items-center">
-              <img src={Logo} alt="نانو سوفت" className="w-16 h-16" />
+              <img src={Logo} alt="نانو سوفت" className="w-14 h-auto" />
             </div>
             <p className="text-gray-400 mt-4">
               شركة رائدة في مجال تقنية المعلومات وتطوير الحلول المتكاملة للشركات
