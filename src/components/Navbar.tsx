@@ -118,19 +118,20 @@ const Navbar = () => {
       category: "الأنظمة",
     },
     {
-      name: "نظام تخطيط موارد المؤسسة NanoSoft ERP",
-      path: "/erp",
-      description: "نظام متكامل يربط جميع عمليات الأعمال في منصة موحدة",
-      icon: <Globe className="h-6 w-6 text-nanosoft-primary mb-2" />,
-      category: "الأنظمة",
-    },
-    {
-      name: "نظام إنجاز لإدارة المشاريع",
+      name: " إنجاز لإدارة المشاريع",
       path: "/injaz",
       description: "نظام متكامل لإدارة المشاريع والمهام وفرق العمل",
       icon: <Kanban className="h-6 w-6 text-nanosoft-primary mb-2" />,
       category: "الأنظمة",
     },
+    {
+      name: " تخطيط موارد المؤسسة NanoSoft ERP",
+      path: "/erp",
+      description: "نظام متكامل يربط جميع عمليات الأعمال في منصة موحدة",
+      icon: <Globe className="h-6 w-6 text-nanosoft-primary mb-2" />,
+      category: "الأنظمة",
+    },
+   
     {
       name: "تطوير المواقع والتطبيقات",
       path: "/websites",

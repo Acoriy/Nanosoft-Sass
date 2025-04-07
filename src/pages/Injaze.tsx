@@ -20,15 +20,9 @@ import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-// Images
-// import DashboardImg from "../assets/ProjectManagement/dashboard.jpg";
-// import TaskManagementImg from "../assets/ProjectManagement/task-management.jpg";
-// import TeamCollaborationImg from "../assets/ProjectManagement/team-collaboration.jpg";
-// import TimeTrackingImg from "../assets/ProjectManagement/time-tracking.jpg";
-// import ReportingImg from "../assets/ProjectManagement/reporting.jpg";
-// import HeroImg from "../assets/ProjectManagement/hero-image.jpg";
 
-import DashboardImg from "../assets/Dashboard1.jpg";
+
+import DashboardImg from "../assets/Dashboards/PMS UI.bmp";
 import TeamCollaborationImg from "../assets/ERPSystem/resurece human.jpg"
 import HeroImg from "../assets/HRSystem/magmentHR2.jpg"
 

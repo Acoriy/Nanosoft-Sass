@@ -25,6 +25,7 @@ import ContactUs from "./pages/ContactUs";
 import WebDevService from "./pages/WebDevService";
 import Injaze from "./pages/Injaze";
 import ERPSystem from "./pages/ERPSystem";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+      <ScrollToTop/>
         <AnimatePresence mode="wait">
           <Routes>
             {/* Pages publiques */}

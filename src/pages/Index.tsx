@@ -71,6 +71,8 @@ const Index = () => {
     setChangeIcon(!changeIcon);
   };
 
+  
+
   return (
     <div className="min-h-screen overflow-x-hidden">
       {/* Hero Section */}
@@ -317,7 +319,7 @@ const Index = () => {
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
+                    // xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
                       strokeLinecap="round"
