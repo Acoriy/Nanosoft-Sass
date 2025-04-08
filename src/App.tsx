@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -26,6 +25,8 @@ import WebDevService from "./pages/WebDevService";
 import Injaze from "./pages/Injaze";
 import ERPSystem from "./pages/ERPSystem";
 import ScrollToTop from "./components/ScrollToTop";
+import PrivacyPolicy from "./pages/PrivasyPolicy";
+import TermsAndConditions from "./pages/TermesAndConditions";
 
 const queryClient = new QueryClient();
 
@@ -35,7 +36,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-      <ScrollToTop/>
+        <ScrollToTop />
         <AnimatePresence mode="wait">
           <Routes>
             {/* Pages publiques */}
@@ -79,7 +80,7 @@ const App = () => (
                 </>
               }
             />
-            
+
             {/* Page de contact */}
             <Route
               path="/contact"
@@ -91,10 +92,10 @@ const App = () => (
                 </>
               }
             />
-            
+
             {/* New Web Development Service Page */}
             <Route
-              path="/websites"
+              path="/websitesMobileApps"
               element={
                 <>
                   <Navbar />
@@ -103,7 +104,7 @@ const App = () => (
                 </>
               }
             />
-            
+
             {/* Nouvelles pages des produits */}
             <Route
               path="/accounting"
@@ -140,7 +141,7 @@ const App = () => (
               element={
                 <>
                   <Navbar />
-                  <Injaze/>
+                  <Injaze />
                   <Footer />
                 </>
               }
@@ -150,23 +151,43 @@ const App = () => (
               element={
                 <>
                   <Navbar />
-                  <ERPSystem/>
+                  <ERPSystem />
                   <Footer />
                 </>
               }
             />
-            
-            
+
+            <Route
+              path="/privacy-policy"
+              element={
+                <>
+                  <Navbar />
+                  <PrivacyPolicy />
+                  <Footer />
+                </>
+              }
+            />
+            <Route
+              path="/terms-of-use"
+              element={
+                <>
+                  <Navbar />
+                  <TermsAndConditions />
+                  <Footer />
+                </>
+              }
+            />
+
             {/* Admin Login */}
             <Route path="/admin/login" element={<AdminLogin />} />
-            
+
             {/* Dashboard Admin */}
             <Route path="/admin" element={<DashboardLayout />}>
               <Route index element={<Dashboard />} />
               <Route path="blogs" element={<BlogAdmin />} />
               <Route path="prices" element={<PriceAdmin />} />
             </Route>
-            
+
             {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
           </Routes>

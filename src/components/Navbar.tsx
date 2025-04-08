@@ -138,7 +138,7 @@ const Navbar = () => {
 
     {
       name: "تطوير البرمجيات",
-      path: "/websites",
+      path: "/websitesMobileApps",
       description: "تطوير البرمجيات حسب احتياج العميل",
       icon: <Code className="h-6 w-6 text-nanosoft-primary mb-2" />,
       category: "الخدمات",
@@ -414,7 +414,7 @@ const Navbar = () => {
                 </div>
 
                 {/* Admin Link */}
-                <Link
+                {/* <Link
                   to="/admin/login"
                   className="flex items-center justify-between py-3 px-4 rounded-xl text-lg font-medium text-gray-800 hover:bg-gray-50 mb-6"
                   onClick={closeMobileMenu}
@@ -423,8 +423,7 @@ const Navbar = () => {
                     <ShieldCheck className="ml-2 h-5 w-5 text-nanosoft-primary" />
                     <span>المسؤول</span>
                   </div>
-                  {/* <ChevronRight className="h-5 w-5" /> */}
-                </Link>
+                </Link> */}
 
                 {/* CTA Button */}
                 <div className="px-4">

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Facebook, Youtube, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import Logo from "../assets/Logo.png";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -166,37 +167,37 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-5">خدماتنا</h4>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/websitesMobileApps"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   تطوير البرمجيات
-                </a>
+                </Link>
               </li>
-              <li>
-                <a
-                  href="#"
+              {/* <li>
+                <Link
+                  to="/websitesMobileApps"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   تطبيقات الجوال
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/websitesMobileApps"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   تطوير المواقع
-                </a>
-              </li>
-              <li>
+                </Link>
+              </li> */}
+              {/* <li>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   الذكاء الاصطناعي
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a
                   href="#"
@@ -254,24 +255,24 @@ const Footer = () => {
               © {new Date().getFullYear()} نانو سوفت. جميع الحقوق محفوظة.
             </p>
             <div className="flex space-x-6 space-x-reverse">
-              <a
-                href="#"
+              <Link
+                to="/privacy-policy"
                 className="text-gray-400 hover:text-white text-sm transition-colors duration-300"
               >
                 سياسة الخصوصية
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/terms-of-use"
                 className="text-gray-400 hover:text-white text-sm transition-colors duration-300"
               >
                 الشروط والأحكام
-              </a>
-              <a
-                href="#"
+              </Link>
+              <Link
+                to="/contact"
                 className="text-gray-400 hover:text-white text-sm transition-colors duration-300"
               >
                 الدعم الفني
-              </a>
+              </Link>
             </div>
           </div>
         </motion.div>
