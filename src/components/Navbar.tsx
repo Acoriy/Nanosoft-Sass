@@ -28,7 +28,9 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSolutionsOpen, setIsSolutionsOpen] = useState(false);
-  const [activeMobileCategory, setActiveMobileCategory] = useState<string | null>(null);
+  const [activeMobileCategory, setActiveMobileCategory] = useState<
+    string | null
+  >(null);
   const location = useLocation();
   const dropdownRef = useRef(null);
   const triggerRef = useRef(null);
@@ -46,13 +48,13 @@ const Navbar = () => {
   useEffect(() => {
     // Disable body scroll when mobile menu is open
     if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     }
-    
+
     return () => {
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     };
   }, [isMobileMenuOpen]);
 
@@ -79,7 +81,7 @@ const Navbar = () => {
   const handleMouseLeaveTrigger = () => {
     timeoutRef.current = setTimeout(() => {
       // Vérifier si la souris n'est pas entrée dans le dropdown
-      if (!dropdownRef.current?.matches(':hover')) {
+      if (!dropdownRef.current?.matches(":hover")) {
         setIsSolutionsOpen(false);
       }
     }, 300);
@@ -92,7 +94,9 @@ const Navbar = () => {
   };
 
   const toggleMobileCategory = (category: string) => {
-    setActiveMobileCategory(activeMobileCategory === category ? null : category);
+    setActiveMobileCategory(
+      activeMobileCategory === category ? null : category
+    );
   };
 
   const solutionLinks = [
@@ -131,9 +135,9 @@ const Navbar = () => {
       icon: <Globe className="h-6 w-6 text-nanosoft-primary mb-2" />,
       category: "الأنظمة",
     },
-   
+
     {
-      name: "تطوير المواقع والتطبيقات",
+      name: "تطوير البرمجيات",
       path: "/websites",
       description: "تطوير البرمجيات حسب احتياج العميل",
       icon: <Code className="h-6 w-6 text-nanosoft-primary mb-2" />,
@@ -143,7 +147,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "الرئيسية", path: "/" },
-    { name: "الأسعار", path: "/pricing" },
+    // { name: "الأسعار", path: "/pricing" },
     { name: "المدونة", path: "/blog" },
     { name: "اتصل بنا", path: "/contact" },
   ];
@@ -175,7 +179,7 @@ const Navbar = () => {
             </Link>
 
             {/* ==================== VERSION DESKTOP ==================== */}
-            <div className="hidden md:flex items-center space-x-6">
+            {/* <div className="hidden md:flex items-center space-x-8">
               <div className="relative">
                 <NavigationMenu>
                   <NavigationMenuList>
@@ -224,15 +228,78 @@ const Navbar = () => {
                     isScrolled ? "bg-nanosoft-primary text-white" : ""
                   )}
                 >
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
+                  <a target="_blank" rel="noopener noreferrer">
+                    ابدأ الآن
+                  </a>
+                </Button>
+              </Link>
+            </div> */}
+
+            {/* ======== Version Desktop ======== */}
+          <div className="hidden md:flex items-center justify-between w-full mr-8">
+            {/* Partie gauche : Logo et liens rapprochés */}
+            <div className="flex items-center space-x-8">
+             
+              {/* Menu déroulant "الحلول" */}
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger
+                      ref={triggerRef}
+                      className="text-base font-medium transition-colors duration-200 hover:text-nanosoft-primary ml-8"
+                      onMouseEnter={handleMouseEnterTrigger}
+                      onMouseLeave={handleMouseLeaveTrigger}
+                    >
+                      الحلول
+                    </NavigationMenuTrigger>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+              {/* Lien "الأسعار" */}
+              <Link
+                to="/pricing"
+                className={cn(
+                  "text-base font-medium transition-colors duration-200 hover:text-nanosoft-primary ",
+                  location.pathname === "/pricing"
+                    ? "text-nanosoft-primary"
+                    : "text-gray-700"
+                )}
+              >
+                الأسعار
+              </Link>
+            </div>
+
+            {/* Partie droite : autres liens et CTA */}
+            <div className="flex items-center space-x-8">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className={cn(
+                    "text-base font-medium transition-colors duration-200 hover:text-nanosoft-primary ml-12",
+                    location.pathname === link.path
+                      ? "text-nanosoft-primary"
+                      : "text-gray-700"
+                  )}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <Link to="/pricing" className="ml-4">
+                <Button
+                  asChild
+                  className={cn(
+                    "bg-transparent text-nanosoft-primary border border-nanosoft-primary font-bold border-x-[2.5px] border-y-[2.5px] hover:bg-white hover:opacity-[0.6] hover:text-nanosoft-primary hover:shadow-md transition-all px-5 py-5",
+                    isScrolled ? "bg-nanosoft-primary text-white" : ""
+                  )}
+                >
+                  <a target="_blank" rel="noopener noreferrer">
                     ابدأ الآن
                   </a>
                 </Button>
               </Link>
             </div>
+          </div>
             {/* ==================== FIN VERSION DESKTOP ==================== */}
 
             {/* ==================== TOGGLE MOBILE MENU BUTTON ==================== */}
@@ -274,26 +341,29 @@ const Navbar = () => {
                 </div>
 
                 {/* Solutions Section */}
+                {/* Solutions Section */}
                 <div className="mb-6">
-                  <div 
+                  <div
                     className="flex items-center justify-between py-3 px-4 rounded-xl text-lg font-bold text-gray-900 mb-2 hover:cursor-pointer hover:bg-nanosoft-secondary hover:text-white"
-                    onClick={() => toggleMobileCategory('solutions')}
+                    onClick={() => toggleMobileCategory("solutions")}
                   >
                     <span>الحلول</span>
-                    <ChevronRight className={cn(
-                      "h-5 w-5 transition-transform", 
-                      activeMobileCategory === 'solutions' ? "rotate-90" : ""
-                    )} />
+                    <ChevronRight
+                      className={cn(
+                        "h-5 w-5 transition-transform",
+                        activeMobileCategory === "solutions" ? "rotate-90" : ""
+                      )}
+                    />
                   </div>
-                  
-                  {activeMobileCategory === 'solutions' && (
-                    <div className="pr-2 space-y-4 mt-2 bg-gray-50 p-4 rounded-xl">
+
+                  {activeMobileCategory === "solutions" && (
+                    <div className="pr-2 space-y-4 mt-2 bg-gray-50 p-4 rounded-xl max-h-60 overflow-y-auto">
                       {/* Systems Category */}
                       <div className="mb-3">
                         <div className="text-base font-semibold text-nanosoft-primary mb-2 pr-2 border-r-2 border-nanosoft-primary">
                           الأنظمة
                         </div>
-                        <div className="space-y-2 pr-4">
+                        <div className="space-y-2  pr-4">
                           {solutionLinks
                             .filter((link) => link.category === "الأنظمة")
                             .map((system) => (
@@ -306,7 +376,9 @@ const Navbar = () => {
                                 <div className="h-8 w-8 rounded-full bg-nanosoft-primary/10 flex items-center justify-center ml-3 group-hover:bg-nanosoft-primary/20">
                                   {system.icon}
                                 </div>
-                                <span className="text-base font-medium group-hover:text-nanosoft-primary">{system.name}</span>
+                                <span className="text-base font-medium group-hover:text-nanosoft-primary">
+                                  {system.name}
+                                </span>
                               </Link>
                             ))}
                         </div>
@@ -330,7 +402,9 @@ const Navbar = () => {
                                 <div className="h-8 w-8 rounded-full bg-nanosoft-primary/10 flex items-center justify-center ml-3 group-hover:bg-nanosoft-primary/20">
                                   {service.icon}
                                 </div>
-                                <span className="text-base font-medium group-hover:text-nanosoft-primary">{service.name}</span>
+                                <span className="text-base font-medium group-hover:text-nanosoft-primary">
+                                  {service.name}
+                                </span>
                               </Link>
                             ))}
                         </div>
@@ -355,9 +429,7 @@ const Navbar = () => {
                 {/* CTA Button */}
                 <div className="px-4">
                   <Link to="/pricing" onClick={closeMobileMenu}>
-                    <Button
-                      className="w-full py-6 text-lg font-bold bg-gradient-to-r from-nanosoft-primary to-nanosoft-secondary text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                    >
+                    <Button className="w-full py-6 text-lg font-bold bg-gradient-to-r from-nanosoft-primary to-nanosoft-secondary text-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
                       ابدأ الآن
                     </Button>
                   </Link>
@@ -403,19 +475,19 @@ const Navbar = () => {
               </button> */}
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 ">
               <div>
                 <div className="mb-4 pb-2 border-b">
                   <h3 className="text-lg font-bold text-gray-900">الأنظمة</h3>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-x-24">
                   {solutionLinks
                     .filter((link) => link.category === "الأنظمة")
                     .map((system) => (
                       <Link
                         key={system.path}
                         to={system.path}
-                        className="group flex flex-col p-4 rounded-lg transition-all duration-200 hover:bg-gray-50 w-[250px]"
+                        className="group flex flex-col p-4 rounded-lg transition-all duration-200 hover:bg-gray-50 w-[250px] "
                         onClick={() => setIsSolutionsOpen(false)}
                       >
                         <div className="flex flex-col items-start">
@@ -434,7 +506,7 @@ const Navbar = () => {
                 </div>
               </div>
 
-              <div>
+              <div className="mr-32">
                 <div className="mb-4 pb-2 border-b ">
                   <h3 className="text-lg font-bold text-gray-900">الخدمات</h3>
                 </div>
@@ -473,4 +545,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-

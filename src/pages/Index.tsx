@@ -5,7 +5,7 @@ import { blogPosts } from "../data/blogPosts";
 import { useEffect, useState } from "react";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import NewFeaturesSection from "@/components/NewFeaturesSection";
-import Decouvrir from "@/components/Decovrire";
+// import Decouvrir from "@/components/Decovrire";
 import ProductsSection from "@/components/ProductsSection";
 import HomeBlogSection from "@/components/HomeBlogSection";
 
@@ -16,24 +16,59 @@ import systems from "../assets/systheme partenaria.jpg";
 import { ArrowLeft } from "lucide-react";
 import { IoIosArrowBack } from "react-icons/io";
 
+//Brands : 
+import Customer1 from "../assets/CustomersLogo/Picture1.jpg"; 
+import Customer2 from "../assets/CustomersLogo/Picture2.jpg"; 
+import Customer3 from "../assets/CustomersLogo/Picture3.jpg"; 
+import Customer4 from "../assets/CustomersLogo/Picture4.jpg"; 
+import Customer5 from "../assets/CustomersLogo/Picture5.jpg"; 
+import Customer6 from "../assets/CustomersLogo/Picture6.jpg"; 
+import Customer7 from "../assets/CustomersLogo/Picture7.jpg"; 
+import Customer8 from "../assets/CustomersLogo/Picture8.jpg"; 
+import Customer9 from "../assets/CustomersLogo/Picture9.jpg"; 
+import LogosSection from "@/components/LogosSection";
+
 const brands = [
   {
-    src: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
+    src: Customer1,
     alt: "Microsoft",
   },
   {
-    src: "https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg",
+    src: Customer2,
     alt: "IBM",
   },
   {
-    src: "https://upload.wikimedia.org/wikipedia/commons/5/50/Oracle_logo.svg",
+    src: Customer3,
     alt: "Oracle",
   },
   {
-    src: "https://upload.wikimedia.org/wikipedia/commons/1/1d/AmazonWebservices_Logo.svg",
+    src: Customer4,
+    alt: "Amazon Web Services",
+  },
+  {
+    src: Customer5,
+    alt: "Amazon Web Services",
+  },
+  {
+    src: Customer6,
+    alt: "Amazon Web Services",
+  },
+  {
+    src: Customer7,
+    alt: "Amazon Web Services",
+  },
+  {
+    src: Customer8,
+    alt: "Amazon Web Services",
+  },
+  {
+    src: Customer9,
     alt: "Amazon Web Services",
   },
 ];
+
+
+
 
 const Index = () => {
   // animation des logo :
@@ -240,36 +275,7 @@ const Index = () => {
       </section>
 
       {/* animation logos */}
-      <div className="py-5 overflow-hidden">
-        <motion.div className="flex gap-8" animate={controls}>
-          {/* Doublez les logos pour un effet de défilement continu */}
-          {[...brands, ...brands].map((brand, index) => (
-            <motion.div
-              key={index}
-              onHoverStart={() => !isMobile && controls.stop()} // Désactiver le survol sur mobile
-              onHoverEnd={() =>
-                !isMobile &&
-                controls.start({
-                  x: ["0%", "-100%"],
-                  transition: {
-                    duration: isMobile ? 40 : 20, // Ralentir l'animation sur mobile
-                    repeat: Infinity,
-                    ease: "linear",
-                  },
-                })
-              }
-            >
-              <img
-                src={brand.src}
-                alt={brand.alt}
-                className={`h-4 md:h-16 opacity-60 ${
-                  !isMobile && "hover:opacity-100"
-                } transition-opacity`} // Taille réduite sur mobile
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
+      <LogosSection brands={brands} />
 
       {/* Services Section */}
 
@@ -700,7 +706,7 @@ const Index = () => {
       <HomeBlogSection />
 
       {/* اكتشف الجديد */}
-      <Decouvrir />
+      {/* <Decouvrir /> */}
 
       {/* CTA Section */}
       <section className="py-20">
