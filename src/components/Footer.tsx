@@ -4,6 +4,7 @@ import { Facebook, Youtube, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import Logo from "../assets/Logo.png";
 import { RiArrowUpDoubleLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import {Link as LinkScroll} from "react-scroll"
 
 const Footer = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -107,52 +108,52 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-5">روابط سريعة</h4>
             <ul className="space-y-3">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   الرئيسية
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
-                  className="text-gray-400 hover:text-white transition-colors duration-300"
+                <Link
+                  to="/"
+                  className="text-gray-400 hover:text-white transition-colors duration-300 cursoer-pointer"
                 >
                   من نحن
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <LinkScroll
+                  to="services"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   خدماتنا
-                </a>
+                </LinkScroll>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   المنتجات
                 </a>
-              </li>
+              </li> */}
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/blog"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   المدونة
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/contact"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   اتصل بنا
-                </a>
+                </Link>
               </li>
             </ul>
           </motion.div>
@@ -199,20 +200,20 @@ const Footer = () => {
                 </a>
               </li> */}
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/cloud-serveces"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   خدمات السحابة
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/cyber-security"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   الأمن السيبراني
-                </a>
+                </Link>
               </li>
             </ul>
           </motion.div>

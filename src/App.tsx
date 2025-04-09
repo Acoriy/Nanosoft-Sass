@@ -27,6 +27,8 @@ import ERPSystem from "./pages/ERPSystem";
 import ScrollToTop from "./components/ScrollToTop";
 import PrivacyPolicy from "./pages/PrivasyPolicy";
 import TermsAndConditions from "./pages/TermesAndConditions";
+import CyberSecurity from "./components/CyberSecurity";
+import CloudServices from "./components/CloudServices";
 
 const queryClient = new QueryClient();
 
@@ -173,6 +175,28 @@ const App = () => (
                 <>
                   <Navbar />
                   <TermsAndConditions />
+                  <Footer />
+                </>
+              }
+            />
+
+            <Route
+              path="/cyber-security"
+              element={
+                <>
+                  <Navbar />
+                  <CyberSecurity />
+                  <Footer />
+                </>
+              }
+            />
+
+            <Route
+              path="/cloud-serveces"
+              element={
+                <>
+                  <Navbar />
+                  <CloudServices />
                   <Footer />
                 </>
               }

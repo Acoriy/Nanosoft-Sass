@@ -262,13 +262,13 @@ const Injaze = () => {
                       {feature.icon}
                     </div>
                     <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
-                    <p className="text-gray-600 mb-6">{feature.description}</p>
+                    <p className="text-gray-600 mb-6 ">{feature.description}</p>
 
                     <ul className="space-y-3">
                       {feature.points.map((point, idx) => (
-                        <li key={idx} className="flex items-center gap-3">
-                          <Check className="h-5 w-5 text-green-500 shrink-0" />
+                        <li key={idx} className="flex items-center justify-end gap-3">
                           <span>{point}</span>
+                          <Check className="h-5 w-5 text-green-500 shrink-0" />
                         </li>
                       ))}
                     </ul>
