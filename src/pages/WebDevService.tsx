@@ -99,7 +99,7 @@ const WebDevService = () => {
   ];
 
   return (
-    <div className="pt-24 pb-16 bg-gradient-to-b from-white to-gray-50">
+    <div className="pt-24  bg-gradient-to-b from-white to-gray-50">
       {/* Hero Section */}
       <section className="container mx-auto px-4 md:px-6 py-8 md:py-16">
         <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
