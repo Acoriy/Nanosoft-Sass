@@ -1,4 +1,3 @@
-
 // import React from 'react';
 // import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 // import { Badge } from '@/components/ui/badge';
@@ -106,8 +105,6 @@
 
 // export default BlogCard;
 
-
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -139,16 +136,17 @@ const BlogCard: React.FC<BlogCardProps> = ({
   isAdmin = false 
 }) => {
   return (
-    <Card className="flex flex-col h-full overflow-hidden hover:shadow-md transition-all duration-200">
+    <article className="flex flex-col h-full overflow-hidden hover:shadow-md transition-all duration-200">
       {blog.image && (
         <div className="relative h-40 overflow-hidden">
           <img 
             src={blog.image} 
-            alt={blog.title} 
+            alt={`Image illustrant : ${blog.title}`} 
+            loading="lazy"
             className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
           />
           {blog.category && (
-            <Badge className="absolute top-2 right-2 bg-nanosoft-primary/90 text-white">
+            <Badge className="absolute top-2 right-2 bg-nanosoft-primary/90 text-white" aria-label={`Catégorie ${blog.category}`}>
               {blog.category}
             </Badge>
           )}
@@ -157,14 +155,14 @@ const BlogCard: React.FC<BlogCardProps> = ({
       
       <CardHeader className={blog.image ? 'pt-4' : 'pt-6'}>
         <div className="flex justify-between items-start">
-          <CardTitle className="text-lg font-bold line-clamp-2">{blog.title}</CardTitle>
+          <CardTitle  className="text-lg font-bold line-clamp-2">{blog.title}</CardTitle>
           {isAdmin && blog.id && (
-            <Badge variant={blog.published ? "default" : "outline"} className={blog.published ? "bg-green-500" : "text-gray-500"}>
+            <Badge variant={blog.published ? "default" : "outline"} className={blog.published ? "bg-green-500" : "text-gray-500"} aria-label={blog.published ? "Publié" : "Brouillon"}>
               {blog.published ? "Publié" : "Brouillon"}
             </Badge>
           )}
         </div>
-        <CardDescription className="text-sm text-gray-500">
+        <CardDescription className="text-sm text-gray-500" aria-label={`Date de publication ${blog.date}`}>
           {blog.date}
         </CardDescription>
       </CardHeader>
@@ -176,7 +174,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
       <CardFooter className="flex justify-between pt-4 border-t mt-auto">
         {isAdmin ? (
           <div className="flex gap-2 w-full justify-between">
-            <Button variant="outline" size="sm" onClick={() => onEdit && blog.id && onEdit(blog.id)}>
+            <Button variant="outline" size="sm" onClick={() => onEdit && blog.id && onEdit(blog.id)} aria-label="Modifier l'article">
               <Edit className="h-4 w-4 mr-1" />
               Modifier
             </Button>
@@ -186,7 +184,8 @@ const BlogCard: React.FC<BlogCardProps> = ({
                   variant="outline" 
                   size="sm" 
                   className={blog.published ? "text-amber-500 hover:text-amber-700 hover:bg-amber-50" : "text-green-500 hover:text-green-700 hover:bg-green-50"}
-                  onClick={() => onTogglePublish(blog.id!, !blog.published)}
+                  onClick={() => onTogglePublish(blog.id, !blog.published)}
+                  aria-label={blog.published ? "Dépublier l'article" : "Publier l'article"}
                 >
                   {blog.published ? <EyeOff className="h-4 w-4 mr-1" /> : <Eye className="h-4 w-4 mr-1" />}
                   {blog.published ? "Dépublier" : "Publier"}
@@ -197,6 +196,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
                 size="sm" 
                 className="text-red-500 hover:text-red-700 hover:bg-red-50" 
                 onClick={() => onDelete && blog.id && onDelete(blog.id)}
+                aria-label="Supprimer l'article"
               >
                 <Trash className="h-4 w-4 mr-1" />
                 Supprimer
@@ -204,13 +204,16 @@ const BlogCard: React.FC<BlogCardProps> = ({
             </div>
           </div>
         ) : (
-          <Button className="w-full bg-nanosoft-primary hover:bg-nanosoft-primary/90">
+          <Button 
+            className="w-full bg-nanosoft-primary hover:bg-nanosoft-primary/90" 
+            aria-label="Lire l'article">
             Lire l'article
           </Button>
         )}
       </CardFooter>
-    </Card>
+    </article>
   );
 };
 
 export default BlogCard;
+

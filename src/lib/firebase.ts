@@ -1,4 +1,3 @@
-
 import { initializeApp } from 'firebase/app';
 import { 
   getFirestore, 
@@ -53,7 +52,7 @@ let connectionPromise = null;
 // Maximum number of connection retries
 const MAX_RETRIES = 3;
 
-// Vérifier la connexion à Firestore et création automatique des collections si elles n'existent pas
+// Vérifier la connexion à Firestore et créer automatiquement les collections si elles n'existent pas
 export const checkFirestoreConnection = async (retryCount = 0) => {
   if (isConnected) return true;
   
@@ -77,25 +76,22 @@ export const checkFirestoreConnection = async (retryCount = 0) => {
       
       console.log('Firestore connexion réussie ✅');
       
-      // Si aucune donnée n'existe, on initialise les données par défaut
-      if (blogsSnapshot.empty || pricesSnapshot.empty) {
-        console.log('Collections vides, initialisation des données par défaut...');
-        
-        // Nous importons dynamiquement les services pour éviter les dépendances circulaires
-        const { initializeDefaultBlogs } = await import('@/services/blogService');
-        const { initializeDefaultPrices } = await import('@/services/priceService');
-        
-        try {
-          await Promise.all([
-            initializeDefaultBlogs(),
-            initializeDefaultPrices()
-          ]);
-          console.log('Données par défaut initialisées avec succès ✅');
-        } catch (error) {
-          console.error('Erreur lors de l\'initialisation des données par défaut:', error);
-          toast.error('Erreur lors de l\'initialisation des données par défaut');
-        }
-      }
+      // Supprimer l'initialisation des données par défaut
+      // if (blogsSnapshot.empty || pricesSnapshot.empty) {
+      //   console.log('Collections vides, initialisation des données par défaut...');
+      //   const { initializeDefaultBlogs } = await import('@/services/blogService');
+      //   const { initializeDefaultPrices } = await import('@/services/priceService');
+      //   try {
+      //     await Promise.all([
+      //       initializeDefaultBlogs(),
+      //       initializeDefaultPrices()
+      //     ]);
+      //     console.log('Données par défaut initialisées avec succès ✅');
+      //   } catch (error) {
+      //     console.error('Erreur lors de l\'initialisation des données par défaut:', error);
+      //     toast.error('Erreur lors de l\'initialisation des données par défaut');
+      //   }
+      // }
       
       isConnected = true;
       resolve(true);

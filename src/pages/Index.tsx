@@ -187,8 +187,8 @@ const Index = () => {
               />
 
               {/* Quality Badge */}
-              <div className="absolute -bottom-4 md:-bottom-6 -left-4 md:-left-6 w-10/12 md:max-w-xs">
-                <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6">
+              <div className="absolute -bottom-4 md:-bottom-6 -left-4 md:-left-6 w-[230px] md:max-w-[300px]">
+                <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-3 md:p-4">
                   <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-nanosoft-primary/20 flex items-center justify-center">
                       <svg
@@ -217,8 +217,8 @@ const Index = () => {
               </div>
 
               {/* Delivery Badge */}
-              <div className="absolute -top-4 md:-top-6 -right-4 md:-right-6 w-10/12 md:max-w-xs">
-                <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl p-4 md:p-6">
+              <div className="absolute -top-4 md:-top-6 -right-4 md:-right-6 w-[230px] md:max-w-[250px]">
+                <div className="bg-white rounded-xl md:rounded-2xl shadow-lg md:shadow-xl  p-3 md:p-4">
                   <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
                     <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-nanosoft-primary/20 flex items-center justify-center">
                       <svg
