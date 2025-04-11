@@ -169,7 +169,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link
-                  to="/websitesMobileApps"
+                  to="/software-development"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   تطوير البرمجيات
@@ -201,7 +201,7 @@ const Footer = () => {
               </li> */}
               <li>
                 <Link
-                  to="/cloud-serveces"
+                  to="/cloud-services"
                   className="text-gray-400 hover:text-white transition-colors duration-300"
                 >
                   خدمات السحابة

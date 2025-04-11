@@ -375,7 +375,7 @@ export const serviceCategories: ServiceCategory[] = [
     icon: "🏢",
   },
   {
-    id: "websites",
+    id: "software-development",
     name: "تطوير البرمجيات",
     description: "تطوير البرمجيات حسب احتياج العميل",
     icon: "🌐",

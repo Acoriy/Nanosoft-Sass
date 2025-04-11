@@ -61,6 +61,7 @@ export const checkFirestoreConnection = async (retryCount = 0) => {
     return connectionPromise;
   }
 
+  // eslint-disable-next-line no-async-promise-executor
   connectionPromise = new Promise(async (resolve) => {
     try {
       console.log(`Trying to connect to Firestore (attempt ${retryCount + 1}/${MAX_RETRIES + 1})...`);
@@ -131,6 +132,7 @@ const enablePersistence = async () => {
   try {
     await enableIndexedDbPersistence(db);
     console.log('Persistance hors ligne activée ✅');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     if (err.code === 'failed-precondition') {
       console.warn('La persistance Firestore a échoué: Plusieurs onglets ouverts');

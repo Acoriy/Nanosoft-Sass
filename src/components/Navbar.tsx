@@ -690,7 +690,7 @@ const Navbar = () => {
     },
     {
       name: "تطوير البرمجيات",
-      path: "/websitesMobileApps",
+      path: "/software-development",
       description: "تطوير البرمجيات حسب احتياج العميل",
       icon: <Code className="h-6 w-6 text-nanosoft-primary mb-2" />,
       category: "الخدمات",
@@ -705,7 +705,7 @@ const Navbar = () => {
     },
     {
       name: "خدمات الحوسبة السحابية",
-      path: "/cloud-serveces",
+      path: "/cloud-services",
       description:
         "خدمات استضافة وإدارة الحوسبة السحابية لرفع كفاءة الأداء وتسهيل الوصول إلى المعلومات",
       icon: <Cloud className="h-6 w-6 text-nanosoft-primary mb-2" />,

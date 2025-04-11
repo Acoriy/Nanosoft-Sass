@@ -97,7 +97,7 @@ const App = () => (
 
             {/* New Web Development Service Page */}
             <Route
-              path="/websitesMobileApps"
+              path="/software-development"
               element={
                 <>
                   <Navbar />
@@ -192,7 +192,7 @@ const App = () => (
             />
 
             <Route
-              path="/cloud-serveces"
+              path="/cloud-services"
               element={
                 <>
                   <Navbar />

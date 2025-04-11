@@ -391,6 +391,7 @@
 //   },
 // ];
 
+
 export type BlogPost = {
   id: string;
   title: string;
@@ -403,5 +404,5 @@ export type BlogPost = {
   category: string;
 };
 
-// Nous supprimons les données statiques de blogs
+// Empty array without any default data
 export const blogPosts: BlogPost[] = [];

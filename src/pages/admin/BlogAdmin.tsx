@@ -792,12 +792,13 @@ import {
   deleteBlog, 
   toggleBlogPublish,
   Blog,
-  initializeDefaultBlogs,
   blogCategories
 } from "@/services/blogService";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
+import PageHeader from "@/components/PageHeader";
 
+// Images de démo pour préremplir la liste d'options
 const demoImages = [
   "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
   "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
@@ -814,7 +815,7 @@ const BlogAdmin = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("الكل");
   const [editingBlog, setEditingBlog] = useState<Blog | null>(null);
-  const [viewMode, setViewMode] = useState("list");
+  const [viewMode, setViewMode] = useState("list"); // "list" ou "content"
   const [currentBlogContent, setCurrentBlogContent] = useState<Blog | null>(null);
   const [newBlog, setNewBlog] = useState<Blog>({
     title: "",
@@ -830,44 +831,41 @@ const BlogAdmin = () => {
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
   const imageInputRef = useRef<HTMLInputElement>(null);
 
-  const loadBlogsData = async () => {
-    setIsLoading(true);
-    try {
-      await initializeDefaultBlogs();
-      
-      let blogsData;
-      if (selectedCategory === "الكل") {
-        blogsData = await getBlogs();
-      } else {
-        blogsData = await getBlogsByCategory(selectedCategory);
-      }
-      // Filtrer les blogs pour ne garder que ceux qui existent et ont un id
-      blogsData = blogsData.filter((blog: Blog) => blog && blog.id);
-      setBlogs(blogsData);
-    } catch (error) {
-      console.error("Error fetching blogs:", error);
-      toast.error("حدث خطأ أثناء تحميل المدونات");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  // Fetch blogs from Firebase without initializing default blogs
   useEffect(() => {
-    loadBlogsData();
+    const loadBlogs = async () => {
+      setIsLoading(true);
+      try {
+        // Fetch the blogs based on category without initializing defaults
+        let blogsData;
+        if (selectedCategory === "الكل") {
+          blogsData = await getBlogs();
+        } else {
+          blogsData = await getBlogsByCategory(selectedCategory);
+        }
+        setBlogs(blogsData);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+        toast.error("حدث خطأ أثناء تحميل المدونات");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadBlogs();
   }, [selectedCategory]);
 
   const refreshBlogs = async () => {
     try {
       setIsRefreshing(true);
-      await initializeDefaultBlogs();
       
+      // Just reload existing blogs without initializing defaults
       let blogsData;
       if (selectedCategory === "الكل") {
         blogsData = await getBlogs();
       } else {
         blogsData = await getBlogsByCategory(selectedCategory);
       }
-      blogsData = blogsData.filter((blog: Blog) => blog && blog.id);
       setBlogs(blogsData);
       
       toast.success("تم تحديث المدونات بنجاح");
@@ -879,9 +877,9 @@ const BlogAdmin = () => {
     }
   };
 
+  // Filtrer les blogs selon le terme de recherche
   const filteredBlogs = blogs.filter(blog => 
-    blog &&
-    ((blog.title && blog.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    blog && ((blog.title && blog.title.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (blog.category && blog.category.toLowerCase().includes(searchTerm.toLowerCase())))
   );
 
@@ -904,7 +902,7 @@ const BlogAdmin = () => {
   };
 
   const handleEdit = (blog: Blog) => {
-    setEditingBlog({ ...blog });
+    setEditingBlog({...blog});
     setIsEditDialogOpen(true);
   };
 
@@ -938,8 +936,9 @@ const BlogAdmin = () => {
       
       await updateBlog(editingBlog.id, editingBlog);
       
+      // Update local state
       setBlogs(blogs.map(blog => 
-        blog.id === editingBlog.id ? { ...blog, ...editingBlog } : blog
+        blog.id === editingBlog.id ? {...blog, ...editingBlog} : blog
       ));
       
       setIsEditDialogOpen(false);
@@ -990,6 +989,7 @@ const BlogAdmin = () => {
       
       await toggleBlogPublish(id, newPublishState);
       
+      // Update local state
       setBlogs(blogs.map(blog => 
         blog.id === id ? { ...blog, published: newPublishState } : blog
       ));
@@ -1011,180 +1011,13 @@ const BlogAdmin = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-3xl font-bold">إدارة المدونات</h1>
-        
-        <div className="flex flex-wrap gap-2">
-          <Button 
-            onClick={refreshBlogs} 
-            variant="outline" 
-            disabled={isRefreshing} 
-            className="flex items-center gap-2"
-          >
-            <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
-            تحديث
-          </Button>
-          
-          <Dialog open={isNewDialogOpen} onOpenChange={setIsNewDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="bg-nanosoft-primary hover:bg-nanosoft-secondary">
-                <Plus className="ml-2 h-4 w-4" /> إضافة مدونة
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="sm:max-w-[625px] max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>إضافة مدونة جديدة</DialogTitle>
-                <DialogDescription>
-                  أضف تفاصيل المدونة الجديدة هنا. انقر على حفظ عند الانتهاء.
-                </DialogDescription>
-              </DialogHeader>
-              <Tabs defaultValue="details">
-                <TabsList className="mb-4">
-                  <TabsTrigger value="details">التفاصيل الأساسية</TabsTrigger>
-                  <TabsTrigger value="content">المحتوى</TabsTrigger>
-                  <TabsTrigger value="image">الصورة</TabsTrigger>
-                </TabsList>
-                
-                <TabsContent value="details">
-                  <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="title" className="text-right">
-                        العنوان
-                      </Label>
-                      <Input
-                        id="title"
-                        value={newBlog.title}
-                        onChange={(e) => setNewBlog({ ...newBlog, title: e.target.value })}
-                        className="col-span-3"
-                      />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="excerpt" className="text-right">
-                        ملخص
-                      </Label>
-                      <Input
-                        id="excerpt"
-                        value={newBlog.excerpt}
-                        onChange={(e) => setNewBlog({ ...newBlog, excerpt: e.target.value })}
-                        className="col-span-3"
-                      />
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="category" className="text-right">
-                        الفئة
-                      </Label>
-                      <Input
-                        id="category"
-                        value={newBlog.category}
-                        onChange={(e) => setNewBlog({ ...newBlog, category: e.target.value })}
-                        className="col-span-3"
-                        list="categories"
-                      />
-                      <datalist id="categories">
-                        {blogCategories.filter(cat => cat !== "الكل").map((cat) => (
-                          <option key={cat} value={cat} />
-                        ))}
-                      </datalist>
-                    </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="date" className="text-right">
-                        التاريخ
-                      </Label>
-                      <Input
-                        id="date"
-                        type="date"
-                        value={newBlog.date}
-                        onChange={(e) => setNewBlog({ ...newBlog, date: e.target.value })}
-                        className="col-span-3"
-                      />
-                    </div>
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="content">
-                  <div className="grid gap-4 py-4">
-                    <div>
-                      <Label htmlFor="content" className="mb-2 block">
-                        المحتوى
-                      </Label>
-                      <Textarea
-                        id="content"
-                        value={newBlog.content}
-                        onChange={(e) => setNewBlog({ ...newBlog, content: e.target.value })}
-                        className="min-h-[300px]"
-                      />
-                    </div>
-                  </div>
-                </TabsContent>
-                
-                <TabsContent value="image">
-                  <div className="grid gap-4 py-4">
-                    <div className="space-y-4">
-                      <Label className="block">
-                        الصورة
-                      </Label>
-                      
-                      {newBlog.image && (
-                        <div className="relative w-full h-[200px] mb-4 rounded-md overflow-hidden">
-                          <img 
-                            src={newBlog.image} 
-                            alt="Preview" 
-                            className="w-full h-full object-cover"
-                          />
-                          <Button 
-                            variant="destructive" 
-                            size="icon"
-                            className="absolute top-2 right-2"
-                            onClick={() => setNewBlog({ ...newBlog, image: "" })}
-                          >
-                            <X size={16} />
-                          </Button>
-                        </div>
-                      )}
-                      
-                      <div className="flex flex-col space-y-4">
-                        <div>
-                          <Label>رفع صورة جديدة</Label>
-                          <Input
-                            ref={imageInputRef}
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleImageChange(e, false)}
-                            className="mt-2"
-                          />
-                        </div>
-                        
-                        <div>
-                          <Label className="mb-2 block">أو اختر من الصور الافتراضية</Label>
-                          <div className="grid grid-cols-3 gap-2">
-                            {demoImages.map((url, i) => (
-                              <div 
-                                key={i} 
-                                className={`relative h-20 rounded-md overflow-hidden cursor-pointer border-2 ${newBlog.image === url ? 'border-nanosoft-primary' : 'border-transparent'}`}
-                                onClick={() => selectDemoImage(url, false)}
-                              >
-                                <img src={url} alt={`Demo ${i+1}`} className="w-full h-full object-cover" />
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </TabsContent>
-              </Tabs>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setIsNewDialogOpen(false)}>
-                  إلغاء
-                </Button>
-                <Button onClick={handleAddBlog} className="bg-nanosoft-primary hover:bg-nanosoft-secondary">
-                  حفظ
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
+      <PageHeader
+        title="إدارة المدونات"
+        onRefresh={refreshBlogs}
+        isRefreshing={isRefreshing}
+        onAdd={() => setIsNewDialogOpen(true)}
+        addButtonText="إضافة مدونة"
+      />
       
       <Card>
         <CardHeader>
@@ -1324,6 +1157,7 @@ const BlogAdmin = () => {
         </CardContent>
       </Card>
       
+      {/* Affichage du contenu complet du blog */}
       <Dialog open={isViewDialogOpen} onOpenChange={setIsViewDialogOpen}>
         <DialogContent className="sm:max-w-[700px] max-h-[80vh] overflow-y-auto">
           {currentBlogContent && (
@@ -1358,6 +1192,7 @@ const BlogAdmin = () => {
         </DialogContent>
       </Dialog>
       
+      {/* Édition d'un blog existant */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="sm:max-w-[625px] max-h-[90vh] overflow-y-auto">
           <DialogHeader>
