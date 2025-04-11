@@ -236,9 +236,7 @@
 
 // export default PriceForm;
 
-
-// PriceForm.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -252,11 +250,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { serviceCategories } from '@/data/pricingData';
 import { toast } from 'sonner';
 
-// Schéma de validation incluant le nouveau champ priceUSD
-export const priceSchema = z.object({
+// Schéma de validation
+const priceSchema = z.object({
   title: z.string().min(3, { message: 'العنوان يجب أن يحتوي على 3 أحرف على الأقل' }),
   price: z.string().min(1, { message: 'السعر مطلوب' }),
-  priceUSD: z.string().min(1, { message: 'السعر بالدولار مطلوب' }), // Nouveau champ
   currency: z.string().min(1, { message: 'العملة مطلوبة' }),
   period: z.string().min(1, { message: 'الفترة مطلوبة' }),
   features: z.string().min(5, { message: 'المميزات يجب أن تحتوي على 5 أحرف على الأقل' }),
@@ -264,10 +261,9 @@ export const priceSchema = z.object({
   category: z.string().min(1, { message: 'الفئة مطلوبة' })
 });
 
-export type PriceFormValues = z.infer<typeof priceSchema>;
+type PriceFormValues = z.infer<typeof priceSchema>;
 
 interface PriceFormProps {
-  // Vous pouvez utiliser any ou mieux typé selon vos besoins
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   price?: any;
   onSubmit: (data: PriceFormValues) => void;
@@ -281,7 +277,6 @@ const PriceForm: React.FC<PriceFormProps> = ({ price, onSubmit, onCancel, isSubm
     defaultValues: {
       title: price?.title || '',
       price: price?.price || '',
-      priceUSD: price?.priceUSD || '', // Valeur par défaut pour le nouveau champ
       currency: price?.currency || 'LYD',
       period: price?.period || 'monthly',
       features: price?.features || '',
@@ -289,24 +284,49 @@ const PriceForm: React.FC<PriceFormProps> = ({ price, onSubmit, onCancel, isSubm
       category: price?.category || 'accounting'
     }
   });
-  
-  // Les périodes proposées
+
   const periods = [
     { id: 'monthly', name: 'شهرياً' },
     { id: 'yearly', name: 'سنوياً' },
     { id: 'quarterly', name: 'كل ثلاثة أشهر' }
   ];
-  
-  // Les devises proposées
+
   const currencies = [
     { id: 'LYD', name: 'د.ل (دينار ليبي)' },
     { id: 'USD', name: '$ (دولار أمريكي)' },
     { id: 'EUR', name: '€ (يورو)' }
   ];
-  
-  // Pour déboguer, on peut afficher les valeurs envoyées
+
+  const [featuresPreview, setFeaturesPreview] = useState<string[]>(price?.features ? price.features.split(',') : []);
+  const [convertedPrice, setConvertedPrice] = useState('');
+  const conversionRate = 4.5;
+
+  const handleFeaturesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    form.setValue('features', value);
+    setFeaturesPreview(value.split(','));
+  };
+
+  const updateConvertedPrice = (price: string, currency: string) => {
+    const numericPrice = parseFloat(price);
+    if (isNaN(numericPrice)) {
+      setConvertedPrice('');
+      return;
+    }
+
+    let converted = '';
+    if (currency === 'LYD') {
+      converted = `${(numericPrice / conversionRate).toFixed(2)} USD`;
+    } else if (currency === 'USD') {
+      converted = `${(numericPrice * conversionRate).toFixed(2)} LYD`;
+    } else {
+      converted = '';
+    }
+
+    setConvertedPrice(converted);
+  };
+
   const handleSubmit = form.handleSubmit((data) => {
-    console.log("Données du formulaire :", data);
     try {
       onSubmit(data);
     } catch (error) {
@@ -314,17 +334,7 @@ const PriceForm: React.FC<PriceFormProps> = ({ price, onSubmit, onCancel, isSubm
       toast.error("حدث خطأ أثناء حفظ البيانات");
     }
   });
-  
-  // Gestion de la prévisualisation des caractéristiques
-  const [featuresPreview, setFeaturesPreview] = useState<string[]>(
-    price?.features ? price.features.split(',') : []
-  );
-  const handleFeaturesChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    form.setValue('features', value);
-    setFeaturesPreview(value.split(','));
-  };
-  
+
   return (
     <Card className="max-w-3xl mx-auto">
       <CardHeader>
@@ -332,6 +342,7 @@ const PriceForm: React.FC<PriceFormProps> = ({ price, onSubmit, onCancel, isSubm
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-6">
+
           <div className="space-y-2">
             <Label htmlFor="title">العنوان</Label>
             <Input
@@ -344,39 +355,29 @@ const PriceForm: React.FC<PriceFormProps> = ({ price, onSubmit, onCancel, isSubm
               <p className="text-red-500 text-sm">{form.formState.errors.title.message}</p>
             )}
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="price">السعر (بالدينار)</Label>
+              <Label htmlFor="price">السعر</Label>
               <Input
                 id="price"
                 placeholder="مثال: 99"
                 {...form.register('price')}
+                onBlur={(e) => updateConvertedPrice(e.target.value, form.getValues('currency'))}
                 className="text-right"
               />
               {form.formState.errors.price && (
                 <p className="text-red-500 text-sm">{form.formState.errors.price.message}</p>
               )}
             </div>
-            
-            {/* Nouveau champ pour le prix en USD */}
-            <div className="space-y-2">
-              <Label htmlFor="priceUSD">السعر بالدولار (USD)</Label>
-              <Input
-                id="priceUSD"
-                placeholder="مثال: 25"
-                {...form.register('priceUSD')}
-                className="text-right"
-              />
-              {form.formState.errors.priceUSD && (
-                <p className="text-red-500 text-sm">{form.formState.errors.priceUSD.message}</p>
-              )}
-            </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="currency">العملة</Label>
               <Select
-                onValueChange={(value) => form.setValue('currency', value)}
+                onValueChange={(value) => {
+                  form.setValue('currency', value);
+                  updateConvertedPrice(form.getValues('price'), value);
+                }}
                 defaultValue={form.getValues('currency')}
               >
                 <SelectTrigger id="currency" className="text-right">
@@ -393,8 +394,14 @@ const PriceForm: React.FC<PriceFormProps> = ({ price, onSubmit, onCancel, isSubm
               {form.formState.errors.currency && (
                 <p className="text-red-500 text-sm">{form.formState.errors.currency.message}</p>
               )}
+
+              {convertedPrice && (
+                <p className="text-sm text-muted-foreground text-right mt-1">
+                  السعر المحول: {convertedPrice}
+                </p>
+              )}
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="period">الفترة</Label>
               <Select
@@ -417,7 +424,7 @@ const PriceForm: React.FC<PriceFormProps> = ({ price, onSubmit, onCancel, isSubm
               )}
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="category">الفئة</Label>
             <Select
@@ -440,7 +447,7 @@ const PriceForm: React.FC<PriceFormProps> = ({ price, onSubmit, onCancel, isSubm
               <p className="text-red-500 text-sm">{form.formState.errors.category.message}</p>
             )}
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="features">المميزات (تفصل بفواصل)</Label>
             <Textarea
@@ -453,7 +460,7 @@ const PriceForm: React.FC<PriceFormProps> = ({ price, onSubmit, onCancel, isSubm
             {form.formState.errors.features && (
               <p className="text-red-500 text-sm">{form.formState.errors.features.message}</p>
             )}
-            
+
             {featuresPreview.length > 0 && featuresPreview[0] !== '' && (
               <div className="mt-4 p-4 border rounded-md bg-gray-50">
                 <p className="font-medium mb-2 text-right">معاينة المميزات:</p>
@@ -465,7 +472,7 @@ const PriceForm: React.FC<PriceFormProps> = ({ price, onSubmit, onCancel, isSubm
               </div>
             )}
           </div>
-          
+
           <div className="flex items-center space-x-2">
             <Label htmlFor="isPopular">تمييز كباقة مميزة</Label>
             <Checkbox
@@ -474,8 +481,8 @@ const PriceForm: React.FC<PriceFormProps> = ({ price, onSubmit, onCancel, isSubm
               onCheckedChange={(checked) => form.setValue('isPopular', checked as boolean)}
             />
           </div>
+
         </CardContent>
-        
         <CardFooter className="flex justify-between">
           <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'جاري الحفظ...' : price ? 'تحديث' : 'إنشاء'}
@@ -490,5 +497,3 @@ const PriceForm: React.FC<PriceFormProps> = ({ price, onSubmit, onCancel, isSubm
 };
 
 export default PriceForm;
-
-
