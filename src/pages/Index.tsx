@@ -1112,7 +1112,7 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Features Section
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <motion.div
@@ -1142,7 +1142,7 @@ const Index = () => {
               >
                 <div className="w-16 h-16 rounded-2xl bg-nanosoft-primary/10 flex items-center justify-center mb-6" aria-hidden="true">
                   {/* Exemple d'icône (vous pouvez utiliser une icône issue d'une librairie) */}
-                  <svg className="w-8 h-8 text-nanosoft-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {/* <svg className="w-8 h-8 text-nanosoft-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4" />
                   </svg>
                 </div>
@@ -1154,7 +1154,208 @@ const Index = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+
+      {/* Features Section */}
+       <section className="py-20 bg-gray-50">
+         <div className="container mx-auto px-4">
+           <motion.div
+             initial={{ opacity: 0, y: 20 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             transition={{ duration: 0.6 }}
+             viewport={{ once: true }}
+             className="text-center mb-16"
+           >
+             <span className="inline-block px-4 py-1.5 bg-nanosoft-primary/10 text-nanosoft-primary rounded-full text-sm font-medium mb-4">
+               لماذا تختارنا
+             </span>
+             <h2 className="text-3xl md:text-4xl font-bold mb-6">
+               مميزات NanoSoft
+             </h2>
+             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+               نحن نسعى جاهدين لتقديم أفضل الحلول البرمجية التي تلبي احتياجات
+               عملائنا وتتجاوز توقعاتهم.
+             </p>
+           </motion.div>
+
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+             <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.5, delay: 0.1 }}
+               viewport={{ once: true }}
+               className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300"
+             >
+               <div className="w-16 h-16 rounded-2xl bg-nanosoft-primary/10 flex items-center justify-center mb-6">
+                 <svg
+                   className="w-8 h-8 text-nanosoft-primary"
+                   fill="none"
+                   stroke="currentColor"
+                   viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg"
+                 >
+                   <path
+                     strokeLinecap="round"
+                     strokeLinejoin="round"
+                     strokeWidth="2"
+                     d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                   ></path>
+                 </svg>
+               </div>
+               <h3 className="text-xl font-bold mb-4">حلول آمنة وموثوقة</h3>
+               <p className="text-gray-600">
+                 نحن نضع أمن البيانات في مقدمة أولوياتنا، ونستخدم أحدث تقنيات
+                 الحماية لضمان سلامة بياناتك.
+               </p>
+             </motion.div>
+             <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.5, delay: 0.2 }}
+               viewport={{ once: true }}
+               className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300"
+             >
+               <div className="w-16 h-16 rounded-2xl bg-nanosoft-primary/10 flex items-center justify-center mb-6">
+                 <svg
+                   className="w-8 h-8 text-nanosoft-primary"
+                   fill="none"
+                   stroke="currentColor"
+                   viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg"
+                 >
+                   <path
+                     strokeLinecap="round"
+                     strokeLinejoin="round"
+                     strokeWidth="2"
+                     d="M13 10V3L4 14h7v7l9-11h-7z"
+                   ></path>
+                 </svg>
+               </div>
+               <h3 className="text-xl font-bold mb-4">أداء عالي وسرعة فائقة</h3>
+               <p className="text-gray-600">
+                 نطور حلولًا مُحسّنة للأداء تعمل بسرعة وكفاءة، مما يوفر تجربة
+                 مستخدم سلسة وسريعة.
+               </p>
+             </motion.div>
+             <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.5, delay: 0.3 }}
+               viewport={{ once: true }}
+               className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300"
+             >
+               <div className="w-16 h-16 rounded-2xl bg-nanosoft-primary/10 flex items-center justify-center mb-6">
+                 <svg
+                   className="w-8 h-8 text-nanosoft-primary"
+                   fill="none"
+                   stroke="currentColor"
+                   viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg"
+                 >
+                   <path
+                     strokeLinecap="round"
+                     strokeLinejoin="round"
+                     strokeWidth="2"
+                     d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                   ></path>
+                 </svg>
+               </div>
+               <h3 className="text-xl font-bold mb-4">تصميم سهل الاستخدام</h3>
+               <p className="text-gray-600">
+                 نركز على تصميم واجهات سهلة الاستخدام وبديهية تجعل التفاعل مع
+                 تطبيقاتنا تجربة ممتعة.
+               </p>
+             </motion.div>
+             <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.5, delay: 0.4 }}
+               viewport={{ once: true }}
+               className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300"
+             >
+               <div className="w-16 h-16 rounded-2xl bg-nanosoft-primary/10 flex items-center justify-center mb-6">
+                 <svg
+                   className="w-8 h-8 text-nanosoft-primary"
+                   fill="none"
+                   stroke="currentColor"
+                   viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg"
+                 >
+                   <path
+                     strokeLinecap="round"
+                     strokeLinejoin="round"
+                     strokeWidth="2"
+                     d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                   ></path>
+                 </svg>
+               </div>
+               <h3 className="text-xl font-bold mb-4">تحديثات مستمرة</h3>
+               <p className="text-gray-600">
+                 نقدم تحديثات منتظمة لتطبيقاتنا لضمان مواكبتها لأحدث التقنيات
+                 والمعايير الأمنية.
+               </p>
+             </motion.div>
+             <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.5, delay: 0.5 }}
+               viewport={{ once: true }}
+               className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300"
+             >
+               <div className="w-16 h-16 rounded-2xl bg-nanosoft-primary/10 flex items-center justify-center mb-6">
+                 <svg
+                   className="w-8 h-8 text-nanosoft-primary"
+                   fill="none"
+                   stroke="currentColor"
+                   viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg"
+                 >
+                   <path
+                     strokeLinecap="round"
+                     strokeLinejoin="round"
+                     strokeWidth="2"
+                     d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                   ></path>
+                 </svg>
+               </div>
+               <h3 className="text-xl font-bold mb-4">قابلية للتوسع</h3>
+               <p className="text-gray-600">
+                 نطور حلولًا قابلة للتوسع تنمو مع نمو أعمالك، مما يضمن استمرارية
+                 الاستفادة منها على المدى الطويل.
+               </p>
+             </motion.div>
+             <motion.div
+               initial={{ opacity: 0, y: 20 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               transition={{ duration: 0.5, delay: 0.6 }}
+               viewport={{ once: true }}
+               className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300"
+             >
+               <div className="w-16 h-16 rounded-2xl bg-nanosoft-primary/10 flex items-center justify-center mb-6">
+                 <svg
+                   className="w-8 h-8 text-nanosoft-primary"
+                   fill="none"
+                   stroke="currentColor"
+                   viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg"
+                 >
+                   <path
+                     strokeLinecap="round"
+                     strokeLinejoin="round"
+                     strokeWidth="2"
+                     d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
+                   ></path>
+                 </svg>
+               </div>
+               <h3 className="text-xl font-bold mb-4">دعم فني متميز</h3>
+               <p className="text-gray-600">
+                 نقدم دعمًا فنيًا متميزًا على مدار الساعة لضمان حل أي مشكلات قد
+                 تواجهك في أسرع وقت ممكن.
+               </p>
+             </motion.div>
+           </div>
+         </div>
+       </section>
 
       {/* Products Section */}
       <ProductsSection />
