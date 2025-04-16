@@ -207,6 +207,11 @@
 
 // export default BlogForm;
 
+
+
+
+// mthode 2 ) : ------------------------------
+
 import React, { useState, useEffect } from 'react';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
@@ -221,6 +226,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { blogCategories } from '@/services/blogService';
 import { X } from 'lucide-react';
 
+// Schéma de validation pour le formulaire de blog
 const blogSchema = z.object({
   title: z.string().min(3, { message: 'Le titre doit comporter au moins 3 caractères' }),
   excerpt: z.string().min(10, { message: 'L\'extrait doit comporter au moins 10 caractères' }),
@@ -231,10 +237,11 @@ const blogSchema = z.object({
   date: z.string().optional()
 });
 
-export type BlogFormValues = z.infer<typeof blogSchema>;
+type BlogFormValues = z.infer<typeof blogSchema>;
 
 interface BlogFormProps {
-  blog?: Partial<BlogFormValues>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  blog?: any;
   onSubmit: (data: BlogFormValues) => void;
   onCancel: () => void;
   isSubmitting?: boolean;
@@ -243,6 +250,7 @@ interface BlogFormProps {
 const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitting = false }) => {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   
+  // Initialiser le formulaire
   const form = useForm<BlogFormValues>({
     resolver: zodResolver(blogSchema),
     defaultValues: {
@@ -256,24 +264,29 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitt
     }
   });
   
+  // Mettre à jour l'aperçu de l'image lors du chargement initial
   useEffect(() => {
     if (blog?.image) {
       setImagePreview(blog.image);
     }
   }, [blog]);
   
+  // Gérer la mise à jour de l'URL de l'image
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value;
     form.setValue('image', url);
     setImagePreview(url);
   };
   
+  // Effacer l'image
   const clearImage = () => {
     form.setValue('image', '');
     setImagePreview(null);
   };
   
+  // Gérer la soumission du formulaire
   const handleSubmit = form.handleSubmit((data) => {
+    // S'assurer que la date est définie
     if (!data.date) {
       data.date = new Date().toISOString().split('T')[0];
     }
@@ -286,7 +299,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitt
       <CardHeader>
         <CardTitle>{blog ? 'Modifier l\'article' : 'Nouvel article'}</CardTitle>
       </CardHeader>
-      <form onSubmit={handleSubmit} noValidate>
+      <form onSubmit={handleSubmit}>
         <CardContent className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="title">Titre</Label>
@@ -295,13 +308,9 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitt
               placeholder="Titre de l'article"
               {...form.register('title')}
               className="text-right"
-              aria-invalid={!!form.formState.errors.title}
-              aria-describedby="title-error"
             />
             {form.formState.errors.title && (
-              <p id="title-error" role="alert" className="text-red-500 text-sm">
-                {form.formState.errors.title.message}
-              </p>
+              <p className="text-red-500 text-sm">{form.formState.errors.title.message}</p>
             )}
           </div>
           
@@ -312,13 +321,9 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitt
               placeholder="Bref résumé de l'article"
               {...form.register('excerpt')}
               className="min-h-[80px] text-right"
-              aria-invalid={!!form.formState.errors.excerpt}
-              aria-describedby="excerpt-error"
             />
             {form.formState.errors.excerpt && (
-              <p id="excerpt-error" role="alert" className="text-red-500 text-sm">
-                {form.formState.errors.excerpt.message}
-              </p>
+              <p className="text-red-500 text-sm">{form.formState.errors.excerpt.message}</p>
             )}
           </div>
           
@@ -329,13 +334,9 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitt
               placeholder="Contenu de l'article (supporte le markdown)"
               {...form.register('content')}
               className="min-h-[200px] text-right"
-              aria-invalid={!!form.formState.errors.content}
-              aria-describedby="content-error"
             />
             {form.formState.errors.content && (
-              <p id="content-error" role="alert" className="text-red-500 text-sm">
-                {form.formState.errors.content.message}
-              </p>
+              <p className="text-red-500 text-sm">{form.formState.errors.content.message}</p>
             )}
           </div>
           
@@ -345,7 +346,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitt
               onValueChange={(value) => form.setValue('category', value)}
               defaultValue={form.getValues('category')}
             >
-              <SelectTrigger aria-label="Sélectionner une catégorie">
+              <SelectTrigger>
                 <SelectValue placeholder="Sélectionner une catégorie" />
               </SelectTrigger>
               <SelectContent>
@@ -357,9 +358,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitt
               </SelectContent>
             </Select>
             {form.formState.errors.category && (
-              <p role="alert" className="text-red-500 text-sm">
-                {form.formState.errors.category.message}
-              </p>
+              <p className="text-red-500 text-sm">{form.formState.errors.category.message}</p>
             )}
           </div>
           
@@ -371,7 +370,6 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitt
                 placeholder="https://example.com/image.jpg"
                 value={form.getValues('image')}
                 onChange={handleImageChange}
-                aria-label="URL de l'image"
               />
               {imagePreview && (
                 <Button 
@@ -379,7 +377,6 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitt
                   variant="ghost" 
                   size="icon" 
                   onClick={clearImage}
-                  aria-label="Effacer l'image"
                   className="flex-shrink-0"
                 >
                   <X className="h-4 w-4" />
@@ -391,8 +388,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitt
               <div className="mt-2 relative border rounded-md overflow-hidden h-48">
                 <img
                   src={imagePreview}
-                  alt="Aperçu de l'image"
-                  loading="lazy"
+                  alt="Aperçu"
                   className="w-full h-full object-cover"
                   onError={() => setImagePreview(null)}
                 />
@@ -405,17 +401,16 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitt
               id="published"
               checked={form.getValues('published')}
               onCheckedChange={(checked) => form.setValue('published', checked as boolean)}
-              aria-label="Publier cet article"
             />
             <Label htmlFor="published">Publier cet article</Label>
           </div>
         </CardContent>
         
         <CardFooter className="flex justify-between">
-          <Button type="button" variant="outline" onClick={onCancel} aria-label="Annuler l'opération">
+          <Button type="button" variant="outline" onClick={onCancel}>
             Annuler
           </Button>
-          <Button type="submit" disabled={isSubmitting} aria-label={isSubmitting ? 'Enregistrement en cours' : (blog ? 'Mettre à jour l\'article' : 'Créer l\'article')}>
+          <Button type="submit" disabled={isSubmitting}>
             {isSubmitting ? 'Enregistrement...' : blog ? 'Mettre à jour' : 'Créer'}
           </Button>
         </CardFooter>
@@ -425,4 +420,5 @@ const BlogForm: React.FC<BlogFormProps> = ({ blog, onSubmit, onCancel, isSubmitt
 };
 
 export default BlogForm;
+
 
