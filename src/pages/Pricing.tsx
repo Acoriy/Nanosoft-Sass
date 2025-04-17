@@ -345,11 +345,23 @@ const Pricing = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    const pricesQuery = query(
-      collection(db, "prices"),
-      where("category", "==", selectedService),
-      orderBy("createdAt", "desc")
-    );
+
+    // Construire la query Firestore avec fallback en cas d'erreur sur orderBy
+    let pricesQuery;
+    try {
+      pricesQuery = query(
+        collection(db, "prices"),
+        where("category", "==", selectedService),
+        orderBy("createdAt", "desc")
+      );
+    } catch (err) {
+      console.warn("Impossible d'appliquer orderBy(createdAt):", err);
+      // Fallback sans orderBy pour debug ou absence d'index
+      pricesQuery = query(
+        collection(db, "prices"),
+        where("category", "==", selectedService)
+      );
+    }
 
     const unsubscribe = onSnapshot(
       pricesQuery,
