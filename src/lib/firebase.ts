@@ -200,345 +200,183 @@
 // ---------------------------------------------------------------------------------------------
 
 // Import des fonctions nécessaires depuis les SDK Firebase   Mohamed :
-  // import { initializeApp } from 'firebase/app';
-  // import { 
-  //   getFirestore, 
-  //   enableIndexedDbPersistence, 
-  //   connectFirestoreEmulator,
-  //   collection,
-  //   getDocs,
-  //   query,
-  //   limit,
-  //   getDoc,
-  //   doc,
-  //   setDoc,
-  //   writeBatch,
-  //   serverTimestamp,
-  //   onSnapshot
-  // } from 'firebase/firestore';
-  // import { getStorage, connectStorageEmulator } from 'firebase/storage';
-  // import { getAnalytics } from 'firebase/analytics';
-  // import { toast } from 'sonner';
+  import { initializeApp } from 'firebase/app';
+  import { 
+    getFirestore, 
+    enableIndexedDbPersistence, 
+    connectFirestoreEmulator,
+    collection,
+    getDocs,
+    query,
+    limit,
+    getDoc,
+    doc,
+    setDoc,
+    writeBatch,
+    serverTimestamp,
+    onSnapshot
+  } from 'firebase/firestore';
+  import { getStorage, connectStorageEmulator } from 'firebase/storage';
+  import { getAnalytics } from 'firebase/analytics';
+  import { toast } from 'sonner';
 
-  // // Nouvelle configuration Firebase (mise à jour avec vos nouvelles informations)
-  // const firebaseConfig = {
-  //   apiKey: "AIzaSyAE8dYheJ0hIB3c4sYQgev0tASjWNMtufI",
-  //   authDomain: "nanosoft-website.firebaseapp.com",
-  //   projectId: "nanosoft-website",
-  //   storageBucket: "nanosoft-website.firebasestorage.app",
-  //   messagingSenderId: "675136646663",
-  //   appId: "1:675136646663:web:ef2b16a8f2c18ef33d44a2",
-  //   measurementId: "G-YYF4FL80Z3"
-  // };
+  // Nouvelle configuration Firebase (mise à jour avec vos nouvelles informations)
+  const firebaseConfig = {
+    apiKey: "AIzaSyAE8dYheJ0hIB3c4sYQgev0tASjWNMtufI",
+    authDomain: "nanosoft-website.firebaseapp.com",
+    projectId: "nanosoft-website",
+    storageBucket: "nanosoft-website.firebasestorage.app",
+    messagingSenderId: "675136646663",
+    appId: "1:675136646663:web:ef2b16a8f2c18ef33d44a2",
+    measurementId: "G-YYF4FL80Z3"
+  };
 
-  // // Initialisation de Firebase avec la nouvelle configuration
-  // const app = initializeApp(firebaseConfig);
-  // export const db = getFirestore(app);
-  // export const storage = getStorage(app);
+  // Initialisation de Firebase avec la nouvelle configuration
+  const app = initializeApp(firebaseConfig);
+  export const db = getFirestore(app);
+  export const storage = getStorage(app);
 
-  // // Initialisation d'Analytics (en production seulement pour éviter les erreurs en développement)
-  // let analytics = null;
-  // if (typeof window !== 'undefined') {
-  //   try {
-  //     analytics = getAnalytics(app);
-  //   } catch (error) {
-  //     console.error('Erreur d\'initialisation de Analytics:', error);
-  //   }
-  // }
-  // export { analytics };
+  // Initialisation d'Analytics (en production seulement pour éviter les erreurs en développement)
+  let analytics = null;
+  if (typeof window !== 'undefined') {
+    try {
+      analytics = getAnalytics(app);
+    } catch (error) {
+      console.error('Erreur d\'initialisation de Analytics:', error);
+    }
+  }
+  export { analytics };
 
-  // // Variables de gestion de connexion Firestore
-  // let isConnected = false;
-  // let connectionPromise = null;
-  // const MAX_RETRIES = 3;
+  // Variables de gestion de connexion Firestore
+  let isConnected = false;
+  let connectionPromise = null;
+  const MAX_RETRIES = 3;
 
-  // // Vérifier la connexion à Firestore et s'assurer que les collections existent
-  // export const checkFirestoreConnection = async (retryCount = 0) => {
-  //   if (isConnected) return true;
+  // Vérifier la connexion à Firestore et s'assurer que les collections existent
+  export const checkFirestoreConnection = async (retryCount = 0) => {
+    if (isConnected) return true;
     
-  //   if (connectionPromise) {
-  //     return connectionPromise;
-  //   }
+    if (connectionPromise) {
+      return connectionPromise;
+    }
 
-  //   // eslint-disable-next-line no-async-promise-executor
-  //   connectionPromise = new Promise(async (resolve) => {
-  //     try {
-  //       console.log(`Tentative de connexion à Firestore (essai ${retryCount + 1}/${MAX_RETRIES + 1})...`);
+    // eslint-disable-next-line no-async-promise-executor
+    connectionPromise = new Promise(async (resolve) => {
+      try {
+        console.log(`Tentative de connexion à Firestore (essai ${retryCount + 1}/${MAX_RETRIES + 1})...`);
         
-  //       // Vérification de l'existence d'une collection "blogs"
-  //       const blogsRef = collection(db, 'blogs');
-  //       const blogsQuery = query(blogsRef, limit(1));
-  //       await getDocs(blogsQuery);
+        // Vérification de l'existence d'une collection "blogs"
+        const blogsRef = collection(db, 'blogs');
+        const blogsQuery = query(blogsRef, limit(1));
+        await getDocs(blogsQuery);
         
-  //       // Vérification de l'existence d'une collection "prices"
-  //       const pricesRef = collection(db, 'prices');
-  //       const pricesQuery = query(pricesRef, limit(1));
-  //       await getDocs(pricesQuery);
+        // Vérification de l'existence d'une collection "prices"
+        const pricesRef = collection(db, 'prices');
+        const pricesQuery = query(pricesRef, limit(1));
+        await getDocs(pricesQuery);
         
-  //       console.log('Connexion Firestore réussie ✅');
-  //       isConnected = true;
-  //       resolve(true);
-  //     } catch (error) {
-  //       console.error('Erreur de connexion Firestore:', error);
+        console.log('Connexion Firestore réussie ✅');
+        isConnected = true;
+        resolve(true);
+      } catch (error) {
+        console.error('Erreur de connexion Firestore:', error);
         
-  //       // Logique de réessai avec backoff exponentiel
-  //       if (retryCount < MAX_RETRIES) {
-  //         const backoffTime = Math.pow(2, retryCount) * 1000;
-  //         console.log(`Nouvelle tentative dans ${backoffTime / 1000} secondes...`);
+        // Logique de réessai avec backoff exponentiel
+        if (retryCount < MAX_RETRIES) {
+          const backoffTime = Math.pow(2, retryCount) * 1000;
+          console.log(`Nouvelle tentative dans ${backoffTime / 1000} secondes...`);
           
-  //         setTimeout(async () => {
-  //           connectionPromise = null; // Réinitialiser la promesse pour la prochaine tentative
-  //           const result = await checkFirestoreConnection(retryCount + 1);
-  //           resolve(result);
-  //         }, backoffTime);
-  //       } else {
-  //         toast.error('Erreur de connexion à la base de données après plusieurs tentatives');
-  //         console.error('Nombre maximum de tentatives atteint. Impossible de se connecter à Firestore.');
-  //         resolve(false);
-  //       }
-  //     } finally {
-  //       if (isConnected || retryCount >= MAX_RETRIES) {
-  //         connectionPromise = null;
-  //       }
-  //     }
-  //   });
+          setTimeout(async () => {
+            connectionPromise = null; // Réinitialiser la promesse pour la prochaine tentative
+            const result = await checkFirestoreConnection(retryCount + 1);
+            resolve(result);
+          }, backoffTime);
+        } else {
+          toast.error('Erreur de connexion à la base de données après plusieurs tentatives');
+          console.error('Nombre maximum de tentatives atteint. Impossible de se connecter à Firestore.');
+          resolve(false);
+        }
+      } finally {
+        if (isConnected || retryCount >= MAX_RETRIES) {
+          connectionPromise = null;
+        }
+      }
+    });
     
-  //   return connectionPromise;
-  // };
+    return connectionPromise;
+  };
 
-  // // Activer la persistance hors ligne pour Firestore
-  // const enablePersistence = async () => {
-  //   try {
-  //     await enableIndexedDbPersistence(db);
-  //     console.log('Persistance hors ligne activée ✅');
-  //   } catch (err) {
-  //     if (err.code === 'failed-precondition') {
-  //       console.warn('Échec de la persistance Firestore: Plusieurs onglets ouverts');
-  //     } else if (err.code === 'unimplemented') {
-  //       console.warn('La persistance Firestore n\'est pas supportée par ce navigateur');
-  //     } else {
-  //       console.error('Erreur de persistance Firestore:', err);
-  //     }
-  //   }
-  // };
+  // Activer la persistance hors ligne pour Firestore
+  const enablePersistence = async () => {
+    try {
+      await enableIndexedDbPersistence(db);
+      console.log('Persistance hors ligne activée ✅');
+    } catch (err) {
+      if (err.code === 'failed-precondition') {
+        console.warn('Échec de la persistance Firestore: Plusieurs onglets ouverts');
+      } else if (err.code === 'unimplemented') {
+        console.warn('La persistance Firestore n\'est pas supportée par ce navigateur');
+      } else {
+        console.error('Erreur de persistance Firestore:', err);
+      }
+    }
+  };
 
-  // // Initialiser la persistance de façon asynchrone
-  // enablePersistence().catch(error => {
-  //   console.error('Erreur lors de l\'activation de la persistance:', error);
-  // });
+  // Initialiser la persistance de façon asynchrone
+  enablePersistence().catch(error => {
+    console.error('Erreur lors de l\'activation de la persistance:', error);
+  });
 
-  // // Connecter aux émulateurs en mode développement (décommentez si nécessaire)
-  // if (import.meta.env.DEV) {
-  //   try {
-  //     // Exemple de connexion aux émulateurs : décommentez les lignes ci-dessous si requis
-  //     // connectFirestoreEmulator(db, 'localhost', 8080);
-  //     // connectStorageEmulator(storage, 'localhost', 9199);
-  //     console.log('Mode développement: configuration des émulateurs Firebase possible.');
-  //   } catch (error) {
-  //     console.error('Erreur lors de la connexion aux émulateurs Firebase:', error);
-  //   }
-  // }
+  // Connecter aux émulateurs en mode développement (décommentez si nécessaire)
+  if (import.meta.env.DEV) {
+    try {
+      // Exemple de connexion aux émulateurs : décommentez les lignes ci-dessous si requis
+      // connectFirestoreEmulator(db, 'localhost', 8080);
+      // connectStorageEmulator(storage, 'localhost', 9199);
+      console.log('Mode développement: configuration des émulateurs Firebase possible.');
+    } catch (error) {
+      console.error('Erreur lors de la connexion aux émulateurs Firebase:', error);
+    }
+  }
 
-  // // Fonction d'initialisation de Firebase et vérification de la connexion
-  // export const initializeFirebase = async (silent = false) => {
-  //   try {
-  //     console.log('Initialisation de Firebase...');
-  //     const isConnected = await checkFirestoreConnection();
-  //     console.log(`Statut de l'initialisation Firebase: ${isConnected ? 'Succès ✅' : 'Échec ❌'}`);
-  //     return isConnected;
-  //   } catch (error) {
-  //     console.error('Erreur d\'initialisation Firebase:', error);
-  //     if (!silent) {
-  //       toast.error('Erreur d\'initialisation Firebase');
-  //     }
-  //     return false;
-  //   }
-  // };
+  // Fonction d'initialisation de Firebase et vérification de la connexion
+  export const initializeFirebase = async (silent = false) => {
+    try {
+      console.log('Initialisation de Firebase...');
+      const isConnected = await checkFirestoreConnection();
+      console.log(`Statut de l'initialisation Firebase: ${isConnected ? 'Succès ✅' : 'Échec ❌'}`);
+      return isConnected;
+    } catch (error) {
+      console.error('Erreur d\'initialisation Firebase:', error);
+      if (!silent) {
+        toast.error('Erreur d\'initialisation Firebase');
+      }
+      return false;
+    }
+  };
 
-  // // Fonction d'abonnement à une collection pour la synchronisation en temps réel
-  // export const subscribeToCollection = (collectionName, callback) => {
-  //   console.log(`Abonnement à la collection: ${collectionName}`);
-  //   const collectionRef = collection(db, collectionName);
-  //   const q = query(collectionRef);
+  // Fonction d'abonnement à une collection pour la synchronisation en temps réel
+  export const subscribeToCollection = (collectionName, callback, p0: unknown) => {
+    console.log(`Abonnement à la collection: ${collectionName}`);
+    const collectionRef = collection(db, collectionName);
+    const q = query(collectionRef);
     
-  //   return onSnapshot(q, (snapshot) => {
-  //     const data = snapshot.docs.map(doc => ({
-  //       id: doc.id,
-  //       ...doc.data()
-  //     }));
-  //     console.log(`Données reçues pour ${collectionName}:`, data.length, 'documents');
-  //     callback(data);
-  //   }, (error) => {
-  //     console.error(`Erreur lors de l'écoute de ${collectionName}:`, error);
-  //     toast.error('Erreur de synchronisation des données');
-  //   });
-  // };
+    return onSnapshot(q, (snapshot) => {
+      const data = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      console.log(`Données reçues pour ${collectionName}:`, data.length, 'documents');
+      callback(data);
+    }, (error) => {
+      console.error(`Erreur lors de l'écoute de ${collectionName}:`, error);
+      toast.error('Erreur de synchronisation des données');
+    });
+  };
 
   
 
   // -----------------------------------------------------------------------------------------------------------
   // lib/firebase.ts
 
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import {
-  getFirestore,
-  enableIndexedDbPersistence,
-  connectFirestoreEmulator,
-  collection,
-  getDocs,
-  query,
-  limit,
-  onSnapshot,
-  orderBy
-} from 'firebase/firestore';
-import { getStorage, connectStorageEmulator } from 'firebase/storage';
-import { getAnalytics } from 'firebase/analytics';
-import { toast } from 'sonner';
-
-// -----------------------------------------------------------------------------
-// 1) Configuration Firebase
-// -----------------------------------------------------------------------------
-const firebaseConfig = {
-  apiKey: "AIzaSyAE8dYheJ0hIB3c4sYQgev0tASjWNMtufI",
-  authDomain: "nanosoft-website.firebaseapp.com",
-  projectId: "nanosoft-website",
-  storageBucket: "nanosoft-website.firebasestorage.app",
-  messagingSenderId: "675136646663",
-  appId: "1:675136646663:web:ef2b16a8f2c18ef33d44a2",
-  measurementId: "G-YYF4FL80Z3"
-};
-
-// -----------------------------------------------------------------------------
-// 2) Initialisation unique de l’app Firebase
-// -----------------------------------------------------------------------------
-const app = !getApps().length
-  ? initializeApp(firebaseConfig)
-  : getApp();
-
-// -----------------------------------------------------------------------------
-// 3) Exports de base
-// -----------------------------------------------------------------------------
-export const db = getFirestore(app);
-export const storage = getStorage(app);
-
-let analytics = null;
-if (typeof window !== 'undefined') {
-  try {
-    analytics = getAnalytics(app);
-  } catch (error) {
-    console.warn('Firebase Analytics non initialisé :', error);
-  }
-}
-export { analytics };
-
-// -----------------------------------------------------------------------------
-// 4) Persistance IndexedDB (offline)
-// -----------------------------------------------------------------------------
-enableIndexedDbPersistence(db).catch(err => {
-  if (err.code === 'failed-precondition') {
-    console.warn('Persistance désactivée : plusieurs onglets ouverts.');
-  } else if (err.code === 'unimplemented') {
-    console.warn('Persistance non supportée par ce navigateur.');
-  } else {
-    console.error('Erreur persistance IndexedDB :', err);
-  }
-});
-
-// -----------------------------------------------------------------------------
-// 5) Émulateurs (mode DEV seulement)
-// -----------------------------------------------------------------------------
-if (import.meta.env.DEV) {
-  try {
-    // connectFirestoreEmulator(db, 'localhost', 8080);
-    // connectStorageEmulator(storage, 'localhost', 9199);
-    console.log('DEV : prêt pour connexion aux émulateurs Firebase.');
-  } catch (error) {
-    console.error('Erreur connexion émulateurs Firebase :', error);
-  }
-}
-
-// -----------------------------------------------------------------------------
-// 6) Vérification de connexion Firestore (optionnel)
-// -----------------------------------------------------------------------------
-const MAX_RETRIES = 3;
-let isConnected = false;
-let connectionPromise: Promise<boolean> | null = null;
-
-export const checkFirestoreConnection = async (retryCount = 0): Promise<boolean> => {
-  if (isConnected) return true;
-  if (connectionPromise) return connectionPromise;
-
-  connectionPromise = new Promise(async resolve => {
-    try {
-      // Test rapide sur une collection existante
-      const blogsRef = collection(db, 'blogs');
-      await getDocs(query(blogsRef, limit(1)));
-
-      const pricesRef = collection(db, 'prices');
-      await getDocs(query(pricesRef, limit(1)));
-
-      isConnected = true;
-      resolve(true);
-    } catch (error) {
-      console.warn(`Retry Firestore [${retryCount + 1}/${MAX_RETRIES + 1}]`, error);
-      if (retryCount < MAX_RETRIES) {
-        const backoff = 2 ** retryCount * 1000;
-        setTimeout(() => {
-          connectionPromise = null;
-          checkFirestoreConnection(retryCount + 1).then(resolve);
-        }, backoff);
-      } else {
-        toast.error('Impossible de se connecter à Firestore.');
-        resolve(false);
-      }
-    } finally {
-      if (isConnected || retryCount >= MAX_RETRIES) {
-        connectionPromise = null;
-      }
-    }
-  });
-
-  return connectionPromise;
-};
-
-// -----------------------------------------------------------------------------
-// 7) Initialisation globale de Firebase (à appeler au lancement de l’app)
-// -----------------------------------------------------------------------------
-export const initializeFirebase = async (silent = false): Promise<boolean> => {
-  try {
-    const ok = await checkFirestoreConnection();
-    if (!ok && !silent) toast.error('Erreur d’initialisation Firebase');
-    return ok;
-  } catch (e) {
-    console.error('initializeFirebase error:', e);
-    if (!silent) toast.error('Erreur d’initialisation Firebase');
-    return false;
-  }
-};
-
-// -----------------------------------------------------------------------------
-// 8) Abonnement générique à une collection (cache + temps réel)
-// -----------------------------------------------------------------------------
-export const subscribeToCollection = <T = any>(
-  collectionName: string,
-  callback: (items: T[]) => void
-): (() => void) => {
-  const colRef = collection(db, collectionName);
-  const q = query(colRef, orderBy('createdAt', 'desc'));
-
-  return onSnapshot(
-    q,
-    snapshot => {
-      const data = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...(doc.data() as T)
-      }));
-      callback(data);
-    },
-    error => {
-      console.error(`Erreur snapshot ${collectionName}:`, error);
-      toast.error('Erreur de synchronisation des données');
-    }
-  );
-};
 

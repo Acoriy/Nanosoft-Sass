@@ -293,21 +293,15 @@
 
 // export default Pricing;
 
-
-
-//  teste : tsx
-// src/pages/Pricing.tsx
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { serviceCategories } from "../data/pricingData";
-import { db } from "@/lib/firebase";
 import {
-  collection,
-  query,
-  where,
-  orderBy,
-  onSnapshot,
-} from "firebase/firestore";
+  getPricesByCategory,
+  Price,
+  subscribeToPricesUpdates,
+  initializeDefaultPrices,
+} from "../services/priceService";
 import PriceCard from "../components/PriceCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Link } from "react-router-dom";
@@ -320,82 +314,74 @@ import {
 } from "@/components/ui/select";
 import { IoAlertCircleSharp } from "react-icons/io5";
 
-export interface Price {
-  id: string;
-  title: string;
-  price: string;
-  currency: string;
-  period: string;
-  features: string;
-  isPopular: boolean;
-  category: string;
-}
-
 const Pricing = () => {
-  const [selectedService, setSelectedService] = useState(
-    serviceCategories[0].id
-  );
+  const [selectedService, setSelectedService] = useState<string>(serviceCategories[0].id);
+  const [isChangingService, setIsChangingService] = useState<boolean>(false);
   const [pricePlans, setPricePlans] = useState<Price[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [displayCurrency, setDisplayCurrency] = useState("LYD");
-
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [displayCurrency, setDisplayCurrency] = useState<string>("LYD");
+  
   const currentService =
-    serviceCategories.find((s) => s.id === selectedService) ||
+    serviceCategories.find((service) => service.id === selectedService) ||
     serviceCategories[0];
 
   useEffect(() => {
-    setIsLoading(true);
-
-    // Construire la query Firestore avec fallback en cas d'erreur sur orderBy
-    let pricesQuery;
-    try {
-      pricesQuery = query(
-        collection(db, "prices"),
-        where("category", "==", selectedService),
-        orderBy("createdAt", "desc")
-      );
-    } catch (err) {
-      console.warn("Impossible d'appliquer orderBy(createdAt):", err);
-      // Fallback sans orderBy pour debug ou absence d'index
-      pricesQuery = query(
-        collection(db, "prices"),
-        where("category", "==", selectedService)
-      );
-    }
-
-    const unsubscribe = onSnapshot(
-      pricesQuery,
-      (snapshot) => {
-        const prices = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...(doc.data() as Omit<Price, "id">),
-        }));
-        setPricePlans(prices);
-        setIsLoading(false);
-      },
-      (error) => {
-        console.error("Erreur snapshot prices:", error);
+    const loadPrices = async () => {
+      try {
+        setIsLoading(true);
+        await initializeDefaultPrices();
+        const prices = await getPricesByCategory(selectedService);
+        if (prices.length === 0) {
+          console.log("No prices found for category:", selectedService);
+          setTimeout(async () => {
+            const retryPrices = await getPricesByCategory(selectedService);
+            setPricePlans(retryPrices);
+            setIsLoading(false);
+          }, 1500);
+        } else {
+          setPricePlans(prices);
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error("Error loading prices:", error);
         setIsLoading(false);
       }
-    );
+    };
 
-    return () => unsubscribe();
+    loadPrices();
+    const unsubscribe = subscribeToPricesUpdates((updatedPrices) => {
+      const filteredPrices = updatedPrices.filter((p) => p.category === selectedService);
+      if (filteredPrices.length > 0) {
+        setPricePlans(filteredPrices);
+        setIsLoading(false);
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
   }, [selectedService]);
 
-  const handleServiceChange = (id: string) => {
-    if (id !== selectedService) {
-      setSelectedService(id);
-    }
+  const handleServiceChange = (serviceId: string) => {
+    if (serviceId === selectedService) return;
+    setIsChangingService(true);
+    setTimeout(() => {
+      setSelectedService(serviceId);
+      setIsChangingService(false);
+    }, 300);
   };
 
-  const handleSelectPlan = () => {
+  const handleSelectPlan = (planId: string) => {
     window.open("http://crm.nanosoft.ly/", "_blank");
   };
 
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1 },
+    },
   };
+
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -408,7 +394,6 @@ const Pricing = () => {
   return (
     <div className="pt-24 pb-20 min-h-screen bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4">
-        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -422,32 +407,32 @@ const Pricing = () => {
             اختر الباقة المناسبة لاحتياجاتك
           </h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            نقدم مجموعة متنوعة من الباقات المصممة لتلبية احتياجات مختلف الأعمال، من الشركات الناشئة إلى المؤسسات الكبيرة.
+            نقدم مجموعة متنوعة من الباقات المصممة لتلبية احتياجات مختلف الأعمال،
+            من الشركات الناشئة إلى المؤسسات الكبيرة.
           </p>
         </motion.div>
 
-        {/* Service selector and currency converter */}
-        <div className="flex flex-wrap justify-between items-center mb-12">
+        <div className="flex flex-wrap justify-between items-center mb-12 ">
           <div className="flex flex-wrap gap-3 p-2 bg-gray-100 rounded-2xl">
-            {serviceCategories.map((s) => (
+            {serviceCategories.map((service) => (
               <button
-                key={s.id}
-                onClick={() => handleServiceChange(s.id)}
+                key={service.id}
+                onClick={() => handleServiceChange(service.id)}
                 className={`px-5 py-3 rounded-xl text-base font-medium transition-all duration-300 flex items-center ${
-                  selectedService === s.id
+                  selectedService === service.id
                     ? "bg-nanosoft-primary text-white shadow-md"
                     : "bg-transparent text-gray-600 hover:bg-gray-200"
                 }`}
               >
-                <span className="ml-2">{s.icon}</span>
-                <span className="whitespace-nowrap">{s.name}</span>
+                <span className="ml-2">{service.icon}</span>
+                <span className="whitespace-nowrap">{service.name}</span>
               </button>
             ))}
           </div>
           <div className="w-48 mx-auto pt-5">
-            <h1 className="text-xl text-center pb-2 flex items-center justify-center gap-2">
-              <IoAlertCircleSharp className="text-nanosoft-primary" />
-              محول العملات
+            <h1 className="text-xl text-center pb-2 flex flex-row items-center justify-center gap-2 ">
+              <IoAlertCircleSharp className="text-nanosoft-primary"/>
+              محول العملات 
             </h1>
             <Select onValueChange={setDisplayCurrency} defaultValue={displayCurrency}>
               <SelectTrigger className="w-full text-right">
@@ -461,7 +446,6 @@ const Pricing = () => {
           </div>
         </div>
 
-        {/* Category description */}
         <motion.div
           key={`service-${selectedService}`}
           initial={{ opacity: 0 }}
@@ -476,14 +460,13 @@ const Pricing = () => {
           </p>
         </motion.div>
 
-        {/* Pricing cards */}
         <AnimatePresence mode="wait">
-          {isLoading ? (
+          {isChangingService || isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {Array(3)
                 .fill(0)
-                .map((_, i) => (
-                  <div key={i} className="h-[600px]">
+                .map((_, index) => (
+                  <div key={index} className="h-[600px]">
                     <Skeleton className="h-full w-full rounded-2xl" />
                   </div>
                 ))}
@@ -521,7 +504,6 @@ const Pricing = () => {
           )}
         </AnimatePresence>
 
-        {/* Contact section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -530,56 +512,71 @@ const Pricing = () => {
         >
           <h2 className="text-2xl font-bold mb-4">تحتاج إلى حل مخصص؟</h2>
           <p className="text-gray-600 mb-8">
-            نحن نفهم أن كل عمل فريد من نوعه. تواصل معنا للحصول على باقة مخصصة تناسب احتياجاتك الخاصة.
+            نحن نفهم أن كل عمل فريد من نوعه. تواصل معنا للحصول على باقة مخصصة
+            تناسب احتياجاتك الخاصة.
           </p>
-          <a
-            href="mailto:info@nanosoft.ly"
-            className="inline-flex items-center px-6 py-3 rounded-full bg-gray-900 text-white font-medium hover:bg-gray-800 transition-colors"
-          >
-            <svg
-              className="w-5 h-5 ml-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+          <Link to="/contact">
+            <a
+              href="mailto:info@nanosoft.ly"
+              className="inline-flex items-center px-6 py-3 rounded-full bg-gray-900 text-white font-medium hover:bg-gray-800 transition-colors"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-              />
-            </svg>
-            تواصل معنا
-          </a>
+              <svg
+                className="w-5 h-5 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                ></path>
+              </svg>
+              تواصل معنا
+            </a>
+          </Link>
         </motion.div>
 
-        {/* FAQ Section */}
         <div className="mt-24 max-w-3xl mx-auto">
-          <h2 className="text-2xl font-bold mb-8 text-center">الأسئلة الشائعة</h2>
+          <h2 className="text-2xl font-bold mb-8 text-center">
+            الأسئلة الشائعة
+          </h2>
           <div className="space-y-6">
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-              <h3 className="text-lg font-semibold mb-3">هل يمكنني تغيير الباقة لاحقاً؟</h3>
+              <h3 className="text-lg font-semibold mb-3">
+                هل يمكنني تغيير الباقة لاحقاً؟
+              </h3>
               <p className="text-gray-600">
-                نعم، يمكنك الترقية أو تخفيض باقتك في أي وقت. سيتم تعديل الفاتورة بشكل تناسبي.
+                نعم، يمكنك الترقية أو تخفيض باقتك في أي وقت. سيتم تعديل الفاتورة
+                بشكل تناسبي.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-              <h3 className="text-lg font-semibold mb-3">هل هناك فترة تجريبية مجانية؟</h3>
+              <h3 className="text-lg font-semibold mb-3">
+                هل هناك فترة تجريبية مجانية؟
+              </h3>
               <p className="text-gray-600">
-                نقدم استشارة مجانية لمناقشة احتياجاتك ومساعدتك في اختيار الباقة المناسبة.
+                نقدم استشارة مجانية لمناقشة احتياجاتك ومساعدتك في اختيار الباقة
+                المناسبة.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-              <h3 className="text-lg font-semibold mb-3">ما هي طرق الدفع المقبولة؟</h3>
+              <h3 className="text-lg font-semibold mb-3">
+                ما هي طرق الدفع المقبولة؟
+              </h3>
               <p className="text-gray-600">
                 نقبل التحويل المصرفي والدفع النقدي وبطاقات الائتمان/الخصم.
               </p>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-              <h3 className="text-lg font-semibold mb-3">كم من الوقت يستغرق تطوير المشروع؟</h3>
+              <h3 className="text-lg font-semibold mb-3">
+                كم من الوقت يستغرق تطوير المشروع؟
+              </h3>
               <p className="text-gray-600">
-                يعتمد ذلك على تعقيد المشروع. عادة، تستغرق المشاريع البسيطة 2-4 أسابيع، بينما قد تستغرق المشاريع الأكثر تعقيدًا 2-3 أشهر.
+                يعتمد ذلك على تعقيد المشروع. عادة، تستغرق المشاريع البسيطة 2-4
+                أسابيع، بينما قد تستغرق المشاريع الأكثر تعقيدًا 2-3 أشهر.
               </p>
             </div>
           </div>
