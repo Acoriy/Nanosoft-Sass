@@ -66,7 +66,7 @@ export const getBlogs = async (): Promise<Blog[]> => {
     }));
   } catch (error) {
     console.error("Erreur lors de la récupération des blogs:", error);
-    toast.error("Erreur lors de la récupération des articles");
+    // toast.error("Erreur lors de la récupération des articles");
     return [];
   }
 };
@@ -90,7 +90,7 @@ export const getBlogsByCategory = async (category: string): Promise<Blog[]> => {
     }));
   } catch (error) {
     console.error("Erreur lors de la récupération des blogs par catégorie:", error);
-    toast.error("Erreur lors de la récupération des articles par catégorie");
+    // toast.error("Erreur lors de la récupération des articles par catégorie");
     return [];
   }
 };
@@ -111,7 +111,7 @@ export const getBlog = async (id: string): Promise<Blog | null> => {
     };
   } catch (error) {
     console.error("Erreur lors de la récupération du blog:", error);
-    toast.error("Erreur lors de la récupération de l'article");
+    // toast.error("Erreur lors de la récupération de l'article");
     return null;
   }
 };
@@ -134,7 +134,7 @@ export const addBlog = async (blog: Blog): Promise<string> => {
     return docRef.id;
   } catch (error) {
     console.error("Erreur lors de l'ajout du blog:", error);
-    toast.error("Erreur lors de l'ajout de l'article");
+    // toast.error("Erreur lors de l'ajout de l'article");
     throw error;
   }
 };
@@ -152,7 +152,7 @@ export const updateBlog = async (id: string, blog: Partial<Blog>): Promise<void>
     toast.success("Article mis à jour avec succès");
   } catch (error) {
     console.error("Erreur lors de la mise à jour du blog:", error);
-    toast.error("Erreur lors de la mise à jour de l'article");
+    // toast.error("Erreur lors de la mise à jour de l'article");
     throw error;
   }
 };
@@ -177,7 +177,7 @@ export const deleteBlog = async (id: string, imageUrl?: string): Promise<void> =
     toast.success("Article supprimé avec succès");
   } catch (error) {
     console.error("Erreur lors de la suppression du blog:", error);
-    toast.error("Erreur lors de la suppression de l'article");
+    // toast.error("Erreur lors de la suppression de l'article");
     throw error;
   }
 };
@@ -195,7 +195,7 @@ export const toggleBlogPublish = async (id: string, published: boolean): Promise
     toast.success(published ? "Article publié avec succès" : "Article dépublié");
   } catch (error) {
     console.error("Erreur lors du changement de l'état de publication:", error);
-    toast.error("Erreur lors du changement de l'état de publication");
+    // toast.error("Erreur lors du changement de l'état de publication");
     throw error;
   }
 };

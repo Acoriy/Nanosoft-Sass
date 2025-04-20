@@ -34,7 +34,7 @@ const PrivacyPolicy = () => {
   };
 
   return (
-    <>
+    <div className="pt-20">
       <Helmet>
         <title>سياسة الخصوصية - نانوسوفت</title>
         <meta name="description" content="سياسة الخصوصية لشركة البرمجيات الدقيقة (نانوسوفت) للحلول البرمجية وخدمات تقنية المعلومات" />
@@ -234,7 +234,7 @@ const PrivacyPolicy = () => {
           </motion.div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

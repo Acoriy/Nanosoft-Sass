@@ -28,7 +28,7 @@ const TermsAndConditions = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 pt-20">
       {/* Hero Section with Parallax Effect */}
       <section className="relative overflow-hidden py-16 md:py-24 bg-gradient-to-r from-nanosoft-primary/10 to-nanosoft-secondary/10">
         <motion.div 

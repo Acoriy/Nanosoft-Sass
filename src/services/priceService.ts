@@ -94,7 +94,7 @@
 //     }
 //   } catch (error) {
 //     console.error("Erreur lors de l'initialisation des prix par défaut:", error);
-//     toast.error("Erreur lors de la création des prix par défaut");
+    toast.error("Erreur lors de la création des prix par défaut");
 //     throw error;
 //   }
 // };
@@ -124,7 +124,7 @@
 //       return prices;
 //     } catch (error) {
 //       console.error("Erreur lors de la récupération des prix:", error);
-//       toast.error("Erreur lors de la récupération des prix");
+      toast.error("Erreur lors de la récupération des prix");
 //       throw error;
 //     }
 //   });
@@ -215,7 +215,7 @@
 //     };
 //   } catch (error) {
 //     console.error("Erreur lors de la récupération du prix:", error);
-//     toast.error("Erreur lors de la récupération du prix");
+    toast.error("Erreur lors de la récupération du prix");
 //     return null;
 //   }
 // };
@@ -233,7 +233,7 @@
 //     return docRef.id;
 //   } catch (error) {
 //     console.error("Erreur lors de l'ajout du prix:", error);
-//     toast.error("Erreur lors de l'ajout du prix");
+    toast.error("Erreur lors de l'ajout du prix");
 //     throw error;
 //   }
 // };
@@ -250,7 +250,7 @@
 //     toast.success("Prix mis à jour avec succès");
 //   } catch (error) {
 //     console.error("Erreur lors de la mise à jour du prix:", error);
-//     toast.error("Erreur lors de la mise à jour du prix");
+    toast.error("Erreur lors de la mise à jour du prix");
 //     throw error;
 //   }
 // };
@@ -263,7 +263,7 @@
 //     toast.success("Prix supprimé avec succès");
 //   } catch (error) {
 //     console.error("Erreur lors de la suppression du prix:", error);
-//     toast.error("Erreur lors de la suppression du prix");
+    toast.error("Erreur lors de la suppression du prix");
 //     throw error;
 //   }
 // };
@@ -280,7 +280,7 @@
 //     toast.success(isPopular ? "Plan marqué comme populaire" : "Plan marqué comme standard");
 //   } catch (error) {
 //     console.error("Erreur lors de la mise à jour de l'état populaire:", error);
-//     toast.error("Erreur lors de la mise à jour de l'état du plan");
+    toast.error("Erreur lors de la mise à jour de l'état du plan");
 //     throw error;
 //   }
 // };
@@ -296,6 +296,7 @@
 //   return serviceCategories;
 // };
 
+//  -----------------------------------------------------------
 
 import { db } from '@/lib/firebase';
 import {
@@ -384,12 +385,12 @@ export const initializeDefaultPrices = async (): Promise<void> => {
     }
   } catch (error) {
     console.error('Erreur initialisation par défaut:', error);
-    toast.error('Erreur lors de la création des prix par défaut');
+    // toast.error('Erreur lors de la création des prix par défaut');
     throw error;
   }
 };
 
-// Récupérer tous les prix
+// Récupérer tous les prix :
 export const getPrices = async (): Promise<Price[]> =>
   retryOperation(async () => {
     const pricesRef = collection(db, 'prices');
@@ -442,14 +443,13 @@ export const getPricesByCategory = async (category: string): Promise<Price[]> =>
 
 // Abonnement temps réel à tous les prix
 export const subscribeToPricesUpdates = (
-  callback: (prices: Price[]) => void
-): (() => void) => {
+callback: (prices: Price[]) => void, p0?: (err: any) => void): (() => void) => {
   return onSnapshot(
     query(collection(db, 'prices'), orderBy('createdAt', 'desc')),
     snap => callback(snap.docs.map(doc => ({ id: doc.id, ...(doc.data() as Price) }))),
     error => {
       console.error('Erreur snapshot prices:', error);
-      toast.error('Erreur de synchronisation des prix');
+      // toast.error('Erreur de synchronisation des prix');
     }
   );
 };
@@ -468,7 +468,7 @@ export const subscribeToPricesByCategory = (
     snap => callback(snap.docs.map(doc => ({ id: doc.id, ...(doc.data() as Price) }))),
     error => {
       console.error(`Erreur snapshot category ${category}:`, error);
-      toast.error('Erreur de synchronisation des prix');
+      // toast.error('Erreur de synchronisation des prix');
     }
   );
 };
@@ -481,7 +481,7 @@ export const getPrice = async (id: string): Promise<Price | null> => {
     return snap.exists() ? { id: snap.id, ...(snap.data() as Price) } : null;
   } catch (error) {
     console.error('Erreur getPrice:', error);
-    toast.error('Erreur lors de la récupération du prix');
+    // toast.error('Erreur lors de la récupération du prix');
     return null;
   }
 };
@@ -497,7 +497,7 @@ export const addPrice = async (price: Price): Promise<string> => {
     return ref.id;
   } catch (error) {
     console.error('Erreur addPrice:', error);
-    toast.error('Erreur lors de l\u2019ajout du prix');
+    // toast.error('Erreur lors de l\u2019ajout du prix');
     throw error;
   }
 };
@@ -512,7 +512,7 @@ export const updatePrice = async (
     toast.success('Prix mis à jour ✅');
   } catch (error) {
     console.error('Erreur updatePrice:', error);
-    toast.error('Erreur lors de la mise à jour du prix');
+    // toast.error('Erreur lors de la mise à jour du prix');
     throw error;
   }
 };
@@ -523,7 +523,7 @@ export const deletePrice = async (id: string): Promise<void> => {
     toast.success('Prix supprimé ✅');
   } catch (error) {
     console.error('Erreur deletePrice:', error);
-    toast.error('Erreur lors de la suppression du prix');
+    // toast.error('Erreur lors de la suppression du prix');
     throw error;
   }
 };
@@ -538,7 +538,7 @@ export const togglePopular = async (
     toast.success(isPopular ? 'Marqué populaire' : 'Démarquéd populaire');
   } catch (error) {
     console.error('Erreur togglePopular:', error);
-    toast.error('Erreur lors de la mise à jour du statut populaire');
+    // toast.error('Erreur lors de la mise à jour du statut populaire');
     throw error;
   }
 };
